@@ -1,95 +1,89 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useState } from "react";
+import "../styles/global.scss";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [inquiry, setInquiry] = useState("");
+  const [response, setResponse] = useState("");
+  console.log("response: ", response);
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const handleSubmit = async () => {
+    const response = await fetch("/api/inquiry", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ inquiry }),
+    });
+
+    const data = await response.json();
+    setResponse(data);
+  };
+
+  // const handleSubmit = async () => {
+  //   const response = await fetch(
+  //     "https://api.groq.com/openai/v1/chat/completions",
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         messages: [{ role: "user", content: inquiry }],
+  //         model: "llama3-8b-8192",
+  //       }),
+  //     }
+  //   );
+
+  //   const data = await response.json();
+  //   console.log("Data: ", data);
+  //   setResponse(data);
+  // };
+
+  return (
+    <div>
+      <main>
+        <div className="container">
+          <div
+            className="row justify-content-center align-items-center"
+            style={{ paddingTop: "100px" }}
           >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+            <div className="col-12 text-center">
+              <p>What is your Question?</p>
+            </div>
+            <div className="col-8">
+              <div className="d-flex">
+                <input
+                  className="form-control me-4"
+                  type="text"
+                  name="inquiry"
+                  value={inquiry}
+                  onChange={(e) => setInquiry(e.target.value)}
+                />
+                <button
+                  className="btn btn-primary mt-2"
+                  onClick={() => handleSubmit()}
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+            <div className="col-10">
+              {response && (
+                <div className="mt-4">
+                  <h5>Response:</h5>
+                  <pre style={{ color: "white" }}>
+                    {response.response.choices[0].message.content}
+                  </pre>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
