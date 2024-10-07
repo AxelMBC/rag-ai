@@ -1,0 +1,108 @@
+// Variables
+$background-color: #1c2a37;
+$text-color: #e0e0e0;
+$primary-color: #007bff;
+$input-bg-color: #fff;
+$input-text-color: #333;
+$border-radius: 8px;
+
+// Global Styles
+body {
+  background-color: $background-color;
+  color: $text-color;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.main-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+}
+
+.prompt {
+  margin-top: 40px;
+  font-size: 1.2rem;
+}
+
+.response-container {
+  margin-top: 20px;
+}
+
+.response-box {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: $border-radius;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+  h5 {
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: $text-color;
+  }
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.loader {
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-top-color: $text-color;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sticky-chat-input {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 15px 0;
+  background-color: rgba(28, 42, 55, 0.95);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+
+  .container {
+    .row {
+      .col-8 {
+        .input-group {
+          display: flex;
+
+          .form-control {
+            flex: 1;
+            border-radius: $border-radius;
+            padding: 10px;
+            border: none;
+            background-color: $input-bg-color;
+            color: $input-text-color;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+          }
+
+          .btn {
+            margin-left: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: $border-radius;
+          }
+        }
+      }
+    }
+  }
+}

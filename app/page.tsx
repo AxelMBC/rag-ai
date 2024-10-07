@@ -7,10 +7,12 @@ import "../styles/global.scss";
 export default function Home() {
   const [inquiry, setInquiry] = useState("");
   const [response, setResponse] = useState(null);
-  console.log("response: ", response);
+  const [models, setModels] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    const response = await fetch("/api/inquiry", {
+    setLoading(true);
+    const res = await fetch("/api/inquiry", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -18,72 +20,100 @@ export default function Home() {
       body: JSON.stringify({ inquiry }),
     });
 
-    const data = await response.json();
+    const data = await res.json();
     setResponse(data);
+    setLoading(false);
   };
 
-  // const handleSubmit = async () => {
-  //   const response = await fetch(
-  //     "https://api.groq.com/openai/v1/chat/completions",
-  //     {
-  //       method: "POST",
-  //       headers: {
-  //         Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         messages: [{ role: "user", content: inquiry }],
-  //         model: "llama3-8b-8192",
-  //       }),
-  //     }
-  //   );
+  const handleModels = async () => {
+    const res = await fetch("/api/models", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  //   const data = await response.json();
-  //   console.log("Data: ", data);
-  //   setResponse(data);
-  // };
+    const data = await res.json();
+    setModels(data);
+    console.log(data);
+  };
 
   return (
-    <div>
-      <main>
+    <div className="main-container">
+      <main className="content">
         <div className="container">
-          <div
-            className="row justify-content-center align-items-center"
-            style={{ paddingTop: "100px" }}
-          >
+          <div className="row justify-content-center response-container">
             <div className="col-12 text-center">
-              <p>What is your Question?</p>
+              <select>
+                {models?.models?.data.map((model) => (
+                  <option key={model.id} value={model.id}>
+                    {model.id}
+                  </option>
+                ))}
+              </select>
+              <p className="prompt">What is your question?</p>
             </div>
-            <div className="col-8">
-              <div className="d-flex">
-                <input
-                  className="form-control me-4"
-                  type="text"
-                  name="inquiry"
-                  value={inquiry}
-                  onChange={(e) => setInquiry(e.target.value)}
-                />
-                <button
-                  className="btn btn-primary mt-2"
-                  onClick={() => handleSubmit()}
-                >
-                  Submit
-                </button>
-              </div>
-            </div>
-            <div className="col-10">
-              {response && (
-                <div className="mt-4">
+
+            {/* AI Response Section */}
+            <div className="col-8 text-center">
+              {response && !loading && (
+                <div className="response-box">
                   <h5>Response:</h5>
-                  <pre style={{ color: "white" }}>
-                    {response.response.choices[0].message.content}
-                  </pre>
+                  <p>
+                    {response.response?.choices[0]?.message?.content ||
+                      "No response available"}
+                  </p>
+                </div>
+              )}
+
+              {/* Loader when fetching */}
+              {loading && (
+                <div className="loader-container">
+                  <div className="loader"></div>
                 </div>
               )}
             </div>
           </div>
         </div>
       </main>
+
+      {/* Chat Input Sticky at the Bottom */}
+      <div className="sticky-chat-input">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-8">
+              <div className="input-group">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="inquiry"
+                  value={inquiry}
+                  onChange={(e) => setInquiry(e.target.value)}
+                  placeholder="Type your question..."
+                />
+                <button
+                  className="btn btn-primary"
+                  onClick={handleSubmit}
+                  disabled={loading}
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+            <div className="col-8 mt-4">
+              <div className="input-group">
+                <button
+                  className="btn btn-primary"
+                  onClick={() => handleModels()}
+                  disabled={loading}
+                >
+                  Get Models
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
