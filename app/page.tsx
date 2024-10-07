@@ -6,7 +6,7 @@ import "../styles/global.scss";
 
 export default function Home() {
   const [inquiry, setInquiry] = useState("");
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState(null);
   console.log("response: ", response);
 
   const handleSubmit = async () => {
