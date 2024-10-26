@@ -12,18 +12,23 @@ const ModelSelector = ({
   setSelectedModel,
 }: modelSelectorProps) => {
   return (
-    <div className="col-12 text-center">
-      <select
-        value={selectedModel}
-        onChange={(e) => {
-          setSelectedModel(e.target.value);
-        }}
-      >
-        {groqModels.map((model) => (
-          <option key={model.id}>{model.id}</option>
-        ))}
-      </select>
-      <p className="prompt">What is your question?</p>
+    <div className="col-auto d-inline">
+      <div className="d-flex align-items-center">
+        Modelo:
+        <select
+          className="border-0 bg-transparent text-white ms-4"
+          value={selectedModel}
+          onChange={(e) => {
+            setSelectedModel(e.target.value);
+          }}
+        >
+          {groqModels.map((model) => (
+            <option key={model.id} style={{ background: "rgba(1,1,1,1)" }}>
+              {model.id}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
 };

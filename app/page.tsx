@@ -5,15 +5,18 @@ import React, { useState } from "react";
 import "../styles/global.scss";
 import { formatResponse } from "./utils/formatResponse";
 import ModelSelector from "./components/modelSelector";
+import { v4 as uuidv4 } from "uuid";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [inquiry, setInquiry] = useState("");
-  const [answers, setAnswers] = useState<{ author: string; message: string }[]>(
-    []
-  );
+  const [answers, setAnswers] = useState<
+    { id: string; author: string; message: string }[]
+  >([]);
   const [selectedModel, setSelectedModel] = useState("llama3-8b-8192");
   const [loading, setLoading] = useState(false);
-  // console.log(answers);
+  const router = useRouter();
+  console.log("answers", answers);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -21,35 +24,74 @@ export default function Home() {
       method: "POST",
       body: JSON.stringify({ inquiry, model: selectedModel }),
     });
-
+    const machineId = uuidv4();
     const data = await res.json();
     const newAnswer = {
+      id: machineId,
       author: data.response.model,
       message: data.response.choices[0].message.content,
     };
+    const userId = uuidv4();
+    answers.push({ id: userId, author: "User", message: inquiry });
     setAnswers([...answers, newAnswer]);
+    router.push(`#${machineId}`);
     setLoading(false);
+    setInquiry("");
   };
 
   return (
-    <div className="main-container">
+    <div className="main-container d-flex align-items-center">
       <main className="content">
-        <div className="container">
-          <div className="row justify-content-center response-container">
+        <div className="container-fluid">
+          <div className="row response-container">
             <ModelSelector
               selectedModel={selectedModel}
               setSelectedModel={setSelectedModel}
             />
 
-            <div className="col-8" style={{ paddingBottom: "200px" }}>
+            <h3 className="col-12 col-sm-8 prompt fw-bold">
+              What is your question?
+            </h3>
+
+            <div className="col-12" style={{ paddingBottom: "200px" }}>
               {answers &&
                 answers.length > 0 &&
-                answers.map((answer, index) => (
-                  <div className="response-box" key={index}>
-                    <h5>{answer.author}:</h5>
-                    <p>{formatResponse(answer.message)}</p>
-                  </div>
-                ))}
+                answers.map((answer, index) => {
+                  if (answer.author === "User") {
+                    return (
+                      <div
+                        id={answer.id}
+                        className="response-box bg-transparent"
+                        key={index}
+                      >
+                        <h5
+                          style={{
+                            fontWeight: "600",
+
+                            color: "#009bd6",
+                          }}
+                        >
+                          {answer.author}:
+                        </h5>
+                        <span>{formatResponse(answer.message)}</span>
+                      </div>
+                    );
+                  }
+                  return (
+                    <div id={answer.id} className="response-box" key={index}>
+                      <h5
+                        style={{
+                          fontWeight: "600",
+                          color: "#F40009",
+                          paddingTop: "20px",
+                        }}
+                      >
+                        {answer.author}:
+                      </h5>
+                      <p>{formatResponse(answer.message)}</p>
+                    </div>
+                  );
+                })}
 
               {loading && (
                 <div className="loader-container">
