@@ -15,7 +15,6 @@ export async function POST(request: RequestProps) {
     model,
   });
 
-  console.log("response: ", response);
   return new Response(JSON.stringify({ message: "Groq Response", response }), {
     status: 200,
   });
