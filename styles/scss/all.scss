@@ -27,16 +27,29 @@ body {
 
 .content {
   width: 60%;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.sticky-selector {
+  position: sticky;
+  top: 0; /* Stick to the top */
+  left: 0; /* Align to the left */
+  height: 100vh; /* Full viewport height */
+  z-index: 999; /* Make sure it stays above other content */
+  padding: 1rem; /* Optional padding */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ); /* Optional background transparency */
 }
 
 .prompt {
   margin-top: 30px;
-}
-
-.custom-select {
-  select {
-    background-color: black;
-  }
 }
 
 .response-container {
@@ -85,6 +98,7 @@ body {
   bottom: 0;
   width: 100%;
   padding: 20px 0;
+  background-color: $background-color;
 
   .container {
     .row {

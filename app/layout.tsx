@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 // import localFont from "next/font/local";
-import { Inter, Roboto_Mono } from "next/font/google";
+import { Roboto_Mono } from "next/font/google";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "./globals.css";
 

@@ -23,7 +23,7 @@ const ModelSelector = ({
           }}
         >
           {groqModels.map((model) => (
-            <option key={model.id} style={{ background: "rgba(1,1,1,1)" }}>
+            <option key={model.id} style={{ backgroundColor: "rgba(1,1,1)" }}>
               {model.id}
             </option>
           ))}
