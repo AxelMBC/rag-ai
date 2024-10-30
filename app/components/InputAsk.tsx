@@ -43,11 +43,13 @@ const InputAsk = ({
   };
   return (
     <div className="sticky-chat-input">
-      <div className="container">
+      <div className="container-fluid">
         <div className="row justify-content-center">
-          <div className="col-10">
+          <div className="col-2"></div>
+          <div className="col-9">
             <hr />
           </div>
+          <div className="col-2"></div>
           <div className="col-12 col-md-8">
             <div className="input-group">
               <input

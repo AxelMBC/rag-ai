@@ -25,28 +25,13 @@ body {
   flex-direction: column;
 }
 
-.content {
-  width: 60%;
+// .content {
+//   width: 60%;
 
-  @media screen and (max-width: 768px) {
-    width: 100%;
-  }
-}
-
-.sticky-selector {
-  position: sticky;
-  top: 0; /* Stick to the top */
-  left: 0; /* Align to the left */
-  height: 100vh; /* Full viewport height */
-  z-index: 999; /* Make sure it stays above other content */
-  padding: 1rem; /* Optional padding */
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.1
-  ); /* Optional background transparency */
-}
+//   @media screen and (max-width: 768px) {
+//     width: 100%;
+//   }
+// }
 
 .prompt {
   margin-top: 30px;
@@ -91,6 +76,12 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+.fixed-selector {
+  position: fixed;
+  top: 150px;
+  left: 100px;
 }
 
 .sticky-chat-input {

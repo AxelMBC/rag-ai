@@ -18,47 +18,45 @@ export default function Home() {
   // console.log("answers", answers);
 
   return (
-    <div className="main-container d-flex align-items-center">
-      <div className="d-inline"></div>
-      <div style={{ width: "30%" }}></div>
-      <div className="content">
+    <>
+      <div className="main-container d-flex align-items-center">
         <div className="container-fluid">
-          <div className="row response-container">
-            <ModelSelector
-              selectedModel={selectedModel}
-              setSelectedModel={setSelectedModel}
-            />
+          <div className="row justify-content-center response-container">
+            <div className="col-1">
+              <ModelSelector
+                selectedModel={selectedModel}
+                setSelectedModel={setSelectedModel}
+              />
+            </div>
+            <div className="col-12 col-sm-8">
+              <h3 className="prompt fw-bold">What is your question?</h3>
+              <div style={{ paddingBottom: "200px" }}>
+                {answers?.map((answer) => {
+                  return (
+                    <Message
+                      key={answer.id}
+                      answerId={answer.id}
+                      answerAuthor={answer.author}
+                      answerMessage={answer.message}
+                    />
+                  );
+                })}
 
-            <h3 className="col-12 col-sm-8 prompt fw-bold">
-              What is your question?
-            </h3>
-
-            <div className="col-12" style={{ paddingBottom: "200px" }}>
-              {answers?.map((answer) => {
-                return (
-                  <Message
-                    key={answer.id}
-                    answerId={answer.id}
-                    answerAuthor={answer.author}
-                    answerMessage={answer.message}
-                  />
-                );
-              })}
-
-              {loading && <Loader />}
+                {loading && <Loader />}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <InputAsk
-        inquiry={inquiry}
-        setInquiry={setInquiry}
-        selectedModel={selectedModel}
-        answers={answers}
-        setAnswers={setAnswers}
-        setLoading={setLoading}
-      />
-    </div>
+        <InputAsk
+          inquiry={inquiry}
+          setInquiry={setInquiry}
+          selectedModel={selectedModel}
+          answers={answers}
+          setAnswers={setAnswers}
+          setLoading={setLoading}
+        />
+      </div>
+    </>
   );
 }
