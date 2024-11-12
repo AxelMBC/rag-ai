@@ -1,5 +1,5 @@
 // Variables
-$background-color: #1c2a37;
+$background-color: #121212;
 $text-color: #e0e0e0;
 $primary-color: #007bff;
 $input-bg-color: #fff;
@@ -15,23 +15,30 @@ body {
   padding: 0;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .main-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.content {
-  flex: 1;
-}
+// .content {
+//   width: 60%;
+
+//   @media screen and (max-width: 768px) {
+//     width: 100%;
+//   }
+// }
 
 .prompt {
-  margin-top: 40px;
-  font-size: 1.2rem;
+  margin-top: 30px;
 }
 
 .response-container {
-  margin-top: 20px;
+  margin-top: 60px;
 }
 
 .response-box {
@@ -71,13 +78,18 @@ body {
   }
 }
 
+.fixed-selector {
+  position: fixed;
+  top: 150px;
+  left: 100px;
+}
+
 .sticky-chat-input {
   position: fixed;
   bottom: 0;
   width: 100%;
-  padding: 15px 0;
-  background-color: rgba(28, 42, 55, 0.95);
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+  padding: 20px 0;
+  background-color: $background-color;
 
   .container {
     .row {

@@ -1,119 +1,66 @@
 "use client";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from "react";
+import React, { useState } from "react";
 import "../styles/global.scss";
+import ModelSelector from "./components/modelSelector";
+import Message from "./components/Messages";
+import Loader from "./components/Loader";
+import InputAsk from "./components/InputAsk";
 
 export default function Home() {
   const [inquiry, setInquiry] = useState("");
-  const [response, setResponse] = useState(null);
-  const [models, setModels] = useState(null);
+  const [answers, setAnswers] = useState<
+    { id: string; author: string; message: string }[]
+  >([]);
+  const [isThread, setIsThread] = useState(false);
+  const [selectedModel, setSelectedModel] = useState("llama3-8b-8192");
   const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async () => {
-    setLoading(true);
-    const res = await fetch("/api/inquiry", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ inquiry }),
-    });
-
-    const data = await res.json();
-    setResponse(data);
-    setLoading(false);
-  };
-
-  const handleModels = async () => {
-    const res = await fetch("/api/models", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const data = await res.json();
-    setModels(data);
-    console.log(data);
-  };
+  console.log("isThread: ", isThread);
 
   return (
-    <div className="main-container">
-      <main className="content">
-        <div className="container">
+    <>
+      <div className="main-container d-flex align-items-center">
+        <div className="container-fluid">
           <div className="row justify-content-center response-container">
-            <div className="col-12 text-center">
-              <select>
-                {models?.models?.data.map((model) => (
-                  <option key={model.id} value={model.id}>
-                    {model.id}
-                  </option>
-                ))}
-              </select>
-              <p className="prompt">What is your question?</p>
+            <div className="col-1">
+              <ModelSelector
+                selectedModel={selectedModel}
+                setSelectedModel={setSelectedModel}
+                isThread={isThread}
+                setIsThread={setIsThread}
+              />
             </div>
+            <div className="col-12 col-sm-8">
+              <h3 className="prompt fw-bold">What is your question?</h3>
+              <div style={{ paddingBottom: "200px" }}>
+                {answers?.map((answer) => {
+                  return (
+                    <Message
+                      key={answer.id}
+                      answerId={answer.id}
+                      answerAuthor={answer.author}
+                      answerMessage={answer.message}
+                    />
+                  );
+                })}
 
-            {/* AI Response Section */}
-            <div className="col-8 text-center">
-              {response && !loading && (
-                <div className="response-box">
-                  <h5>Response:</h5>
-                  <p>
-                    {response.response?.choices[0]?.message?.content ||
-                      "No response available"}
-                  </p>
-                </div>
-              )}
-
-              {/* Loader when fetching */}
-              {loading && (
-                <div className="loader-container">
-                  <div className="loader"></div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </main>
-
-      {/* Chat Input Sticky at the Bottom */}
-      <div className="sticky-chat-input">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-8">
-              <div className="input-group">
-                <input
-                  className="form-control"
-                  type="text"
-                  name="inquiry"
-                  value={inquiry}
-                  onChange={(e) => setInquiry(e.target.value)}
-                  placeholder="Type your question..."
-                />
-                <button
-                  className="btn btn-primary"
-                  onClick={handleSubmit}
-                  disabled={loading}
-                >
-                  Submit
-                </button>
-              </div>
-            </div>
-            <div className="col-8 mt-4">
-              <div className="input-group">
-                <button
-                  className="btn btn-primary"
-                  onClick={() => handleModels()}
-                  disabled={loading}
-                >
-                  Get Models
-                </button>
+                {loading && <Loader />}
               </div>
             </div>
           </div>
         </div>
+
+        <InputAsk
+          isThread={isThread}
+          inquiry={inquiry}
+          setInquiry={setInquiry}
+          selectedModel={selectedModel}
+          answers={answers}
+          setAnswers={setAnswers}
+          setLoading={setLoading}
+        />
       </div>
-    </div>
+    </>
   );
 }
