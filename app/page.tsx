@@ -13,9 +13,10 @@ export default function Home() {
   const [answers, setAnswers] = useState<
     { id: string; author: string; message: string }[]
   >([]);
+  const [isThread, setIsThread] = useState(false);
   const [selectedModel, setSelectedModel] = useState("llama3-8b-8192");
   const [loading, setLoading] = useState(false);
-  // console.log("answers", answers);
+  console.log("isThread: ", isThread);
 
   return (
     <>
@@ -26,6 +27,8 @@ export default function Home() {
               <ModelSelector
                 selectedModel={selectedModel}
                 setSelectedModel={setSelectedModel}
+                isThread={isThread}
+                setIsThread={setIsThread}
               />
             </div>
             <div className="col-12 col-sm-8">
@@ -49,6 +52,7 @@ export default function Home() {
         </div>
 
         <InputAsk
+          isThread={isThread}
           inquiry={inquiry}
           setInquiry={setInquiry}
           selectedModel={selectedModel}

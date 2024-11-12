@@ -48,3 +48,14 @@ export const groqModels = [
     owned_by: "Mistral",
   },
 ];
+
+export const promptOptions = [
+  {
+    label: "Off",
+    value: false,
+  },
+  {
+    label: "On",
+    value: true,
+  },
+];

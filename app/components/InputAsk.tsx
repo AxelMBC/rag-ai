@@ -2,6 +2,7 @@ import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 
 interface InputAskProps {
+  isThread: boolean;
   inquiry: string;
   setInquiry: (value: string) => void;
   selectedModel: string;
@@ -13,6 +14,7 @@ interface InputAskProps {
 }
 
 const InputAsk = ({
+  isThread,
   inquiry,
   setInquiry,
   selectedModel,
@@ -23,12 +25,21 @@ const InputAsk = ({
   const router = useRouter();
   const handleSubmit = async () => {
     setLoading(true);
-    const res = await fetch("/api/inquiry", {
-      method: "POST",
-      body: JSON.stringify({ inquiry, model: selectedModel }),
-    });
+
+    const res = !isThread
+      ? await fetch("/api/inquiry", {
+          method: "POST",
+          body: JSON.stringify({ inquiry, model: selectedModel }),
+        })
+      : await fetch("/api/inquiry", {
+          method: "POST",
+          body: JSON.stringify({
+            inquiry: JSON.stringify(answers),
+            model: selectedModel,
+          }),
+        });
     const machineId = uuidv4();
-    const data = await res.json();
+    const data = await res?.json();
     const newAnswer = {
       id: machineId,
       author: data.response.model,

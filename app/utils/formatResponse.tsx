@@ -44,6 +44,20 @@ export const formatResponse = (content: string) => {
           <code>{codeBlock.join("\n")}</code>
         </pre>
       );
+    } else if (line.startsWith("* ")) {
+      const boldFormatted = line.split("*").map((chunk, index) =>
+        index % 2 === 0 ? (
+          chunk
+        ) : (
+          <li
+            key={i + index}
+            style={{ listStyleType: "circle", marginLeft: "10px" }}
+          >
+            {chunk}
+          </li>
+        )
+      );
+      formattedLines.push(boldFormatted);
     } else if (line) {
       // Handle regular paragraphs
       formattedLines.push(<p key={i}>{line}</p>);
