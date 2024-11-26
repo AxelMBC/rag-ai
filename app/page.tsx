@@ -30,7 +30,7 @@ export default function Home() {
           <div className="row justify-content-center response-container">
             <div
               className="col-12 col-sm-8 col-md-6"
-              style={{ marginLeft: "60px" }}
+              style={{ marginLeft: "4em" }}
             >
               <h3 className="prompt fw-bold">What is your question?</h3>
               <div style={{ paddingBottom: "200px" }}>
