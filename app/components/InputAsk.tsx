@@ -56,13 +56,8 @@ const InputAsk = ({
     <div className="sticky-chat-input">
       <div className="container-fluid">
         <div className="row justify-content-center">
-          <div className="col-2"></div>
-          <div className="col-9">
-            <hr />
-          </div>
-          <div className="col-2"></div>
-          <div className="col-12 col-md-8">
-            <div className="input-group">
+          <div className="col-12 col-md-6">
+            <div className="input-group" style={{ marginLeft: "2em" }}>
               <input
                 className="form-control me-4"
                 type="text"
