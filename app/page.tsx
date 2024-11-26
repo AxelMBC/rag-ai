@@ -16,22 +16,22 @@ export default function Home() {
   const [isThread, setIsThread] = useState(false);
   const [selectedModel, setSelectedModel] = useState("llama3-8b-8192");
   const [loading, setLoading] = useState(false);
-  console.log("isThread: ", isThread);
 
   return (
     <>
+      <ModelSelector
+        selectedModel={selectedModel}
+        setSelectedModel={setSelectedModel}
+        isThread={isThread}
+        setIsThread={setIsThread}
+      />
       <div className="main-container d-flex align-items-center">
         <div className="container-fluid">
           <div className="row justify-content-center response-container">
-            <div className="col-1">
-              <ModelSelector
-                selectedModel={selectedModel}
-                setSelectedModel={setSelectedModel}
-                isThread={isThread}
-                setIsThread={setIsThread}
-              />
-            </div>
-            <div className="col-12 col-sm-8">
+            <div
+              className="col-12 col-sm-8 col-md-6"
+              style={{ marginLeft: "60px" }}
+            >
               <h3 className="prompt fw-bold">What is your question?</h3>
               <div style={{ paddingBottom: "200px" }}>
                 {answers?.map((answer) => {

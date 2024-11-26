@@ -34,7 +34,7 @@ body {
 // }
 
 .prompt {
-  margin-top: 30px;
+  margin-top: 70px;
 }
 
 .response-container {
@@ -45,7 +45,6 @@ body {
   background-color: rgba(255, 255, 255, 0.05);
   padding: 15px;
   border-radius: $border-radius;
-  margin-top: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 
   h5 {
@@ -80,8 +79,8 @@ body {
 
 .fixed-selector {
   position: fixed;
-  top: 150px;
-  left: 100px;
+  top: 20px;
+  left: 10px;
 }
 
 .sticky-chat-input {
