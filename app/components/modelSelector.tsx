@@ -1,58 +1,63 @@
 "use client";
 
-import { groqModels, promptOptions } from "../AIModels/groqModels";
+import { useState } from "react";
+import { groqModels } from "../AIModels/groqModels";
+import "./modelSelector.scss";
 
-interface modelSelectorProps {
+interface ModelSelectorProps {
   selectedModel: string;
   setSelectedModel: (model: string) => void;
-  isThread: boolean;
-  setIsThread: (isThread: boolean) => void;
+}
+
+interface ModelOptionsType {
+  id: string;
+  owned_by: string;
+  type: string;
+  description: string;
 }
 
 const ModelSelector = ({
   selectedModel,
   setSelectedModel,
-  isThread,
-  setIsThread,
-}: modelSelectorProps) => {
+}: ModelSelectorProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleSelect = (modelId: string) => {
+    setSelectedModel(modelId);
+    setIsOpen(false);
+  };
+
   return (
-    <div className="fixed-selector">
-      <select
-        className="border-0 text-white ms-1"
-        value={selectedModel}
-        onChange={(e) => {
-          setSelectedModel(e.target.value);
-        }}
-        style={{ width: "150px" }}
+    <div className="dropdown">
+      <button
+        className="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="modelDropdown"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
       >
-        {groqModels.map((model) => (
-          <option key={model.id} style={{ backgroundColor: "rgba(1,1,1)" }}>
-            {model.id}
-          </option>
-        ))}
-      </select>
-      <div>
-        <select
-          className="border-0 text-white ms-1"
-          value={isThread.toString()}
-          onChange={(e) => {
-            setIsThread(e.target.value === "true");
-            console.log("target: ", e.target);
-          }}
-          style={{ width: "150px" }}
-        >
-          {promptOptions.map((item) => (
-            <option
-              key={item.label}
-              value={item.value.toString()}
-              style={{ backgroundColor: "rgba(1,1,1)" }}
-            >
-              {item.label}
-            </option>
+        {selectedModel || "Select a Model"}
+      </button>
+      <div
+        className={`dropdown-menu${isOpen ? " show" : ""}`}
+        aria-labelledby="modelDropdown"
+      >
+        {groqModels
+          .filter((model: ModelOptionsType) => model.type === "text")
+          .map((model: ModelOptionsType) => (
+            <div key={model.id}>
+              <button
+                className="dropdown-item text-white"
+                onClick={() => handleSelect(model.id)}
+              >
+                <strong>{model.id}</strong>
+                <p className="mb-0">{model.description}</p>
+              </button>
+            </div>
           ))}
-        </select>
       </div>
     </div>
   );
 };
+
 export default ModelSelector;

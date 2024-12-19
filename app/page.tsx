@@ -13,7 +13,7 @@ export default function Home() {
   const [answers, setAnswers] = useState<
     { id: string; author: string; message: string }[]
   >([]);
-  const [isThread, setIsThread] = useState(false);
+
   const [selectedModel, setSelectedModel] = useState("llama3-8b-8192");
   const [loading, setLoading] = useState(false);
 
@@ -22,8 +22,6 @@ export default function Home() {
       <ModelSelector
         selectedModel={selectedModel}
         setSelectedModel={setSelectedModel}
-        isThread={isThread}
-        setIsThread={setIsThread}
       />
       <div className="main-container d-flex align-items-center">
         <div className="container-fluid">
@@ -52,7 +50,6 @@ export default function Home() {
         </div>
 
         <InputAsk
-          isThread={isThread}
           inquiry={inquiry}
           setInquiry={setInquiry}
           selectedModel={selectedModel}

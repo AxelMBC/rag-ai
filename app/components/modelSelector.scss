@@ -1,0 +1,6 @@
+.dropdown-menu {
+  background-color: rgba(0, 0, 0, 0.2);
+  &::hover {
+    color: black !important;
+  }
+}
