@@ -1,5 +1,6 @@
 "use client";
-
+import { useRouter } from "next/navigation";
+import { handleSignOut } from "../lib/auth/signOutServerAction";
 import { useState } from "react";
 import { groqModels } from "../AIModels/groqModels";
 import "./modelSelector.scss";
@@ -20,6 +21,7 @@ const ModelSelector = ({
   selectedModel,
   setSelectedModel,
 }: ModelSelectorProps) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSelect = (modelId: string) => {
@@ -28,7 +30,7 @@ const ModelSelector = ({
   };
 
   return (
-    <div className="dropdown">
+    <div className="dropdown d-flex justify-content-between">
       <button
         className="btn btn-secondary dropdown-toggle"
         type="button"
@@ -56,6 +58,20 @@ const ModelSelector = ({
             </div>
           ))}
       </div>
+      <button
+        className="btn btn-primary"
+        type="button"
+        onClick={() => router.push("/auth/sign-in")}
+      >
+        Sign In
+      </button>
+      <button
+        className="btn btn-danger"
+        type="button"
+        onClick={() => handleSignOut()}
+      >
+        Sign Out
+      </button>
     </div>
   );
 };
