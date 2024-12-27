@@ -1,8 +1,9 @@
 "use server";
+import { signOut } from "./authConfig";
 
 export const handleSignOut = async () => {
   try {
-    console.log("Google Sign Out");
+    await signOut();
   } catch (err) {
     throw err;
   }

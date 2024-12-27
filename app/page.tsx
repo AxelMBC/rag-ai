@@ -7,12 +7,15 @@ import ModelSelector from "./components/modelSelector";
 import Message from "./components/Messages";
 import Loader from "./components/Loader";
 import InputAsk from "./components/InputAsk";
+import { checkIsAuthenticated } from "./lib/auth/checkIsAuthenticated";
 
 export default function Home() {
   const [inquiry, setInquiry] = useState("");
   const [answers, setAnswers] = useState<
     { id: string; author: string; message: string }[]
   >([]);
+  const isAuthenticated = checkIsAuthenticated();
+  console.log("isAuthenticated: ", isAuthenticated);
 
   const [selectedModel, setSelectedModel] = useState("llama3-8b-8192");
   const [loading, setLoading] = useState(false);
