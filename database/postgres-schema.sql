@@ -2,6 +2,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TYPE AuthRole AS ENUM ('USER', 'ADMIN');
 
 CREATE TABLE
+-- User Data related to Sign-Ons, new user that uses magic link
   users (
     id uuid NOT NULL DEFAULT uuid_generate_v4(),
     name VARCHAR(255),
@@ -12,6 +13,7 @@ CREATE TABLE
     PRIMARY KEY (id)
   );
 
+-- Social Sign-Ons
 CREATE TABLE
   accounts (
     id uuid NOT NULL DEFAULT uuid_generate_v4(),
@@ -29,6 +31,7 @@ CREATE TABLE
     PRIMARY KEY (id)
   );
 
+-- Temporary Users storage
 CREATE TABLE
   verification_token (
     identifier TEXT NOT NULL,
