@@ -30,6 +30,7 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.17",
     "@types/pg": "^8.11.10",
