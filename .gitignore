@@ -20,6 +20,13 @@
 .DS_Store
 *.pem
 
+#database
+database/*
+
+# But do NOT ignore these files:
+!database/docker-compose.yaml
+!database/postgres-schema.sql
+
 # debug
 npm-debug.log*
 yarn-debug.log*
