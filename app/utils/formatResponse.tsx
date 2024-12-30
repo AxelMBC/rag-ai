@@ -1,67 +1,89 @@
+import React from "react";
+
 export const formatResponse = (content: string) => {
-  // Ensure content is defined and is a string.
+  // Return null if content is undefined or empty
   if (!content) return null;
 
-  const lines = content.split("\n");
-  const formattedLines = []; // Array to hold formatted JSX elements
+  // Remove the surrounding angle brackets if they exist
+  const cleanContent = content.replace(/^<|>$/g, "").trim();
+
+  // Split content into lines
+  const lines = cleanContent.split("\n");
+  const formattedLines: React.ReactNode[] = [];
 
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim(); // Trim each line
+    const line = lines[i].trim();
 
-    if (line.startsWith("###")) {
-      // Handle headings
+    if (!line) continue; // Skip empty lines
+
+    // Handle numbered lists (e.g., "1. **Topic**:")
+    if (/^\d+\.\s+\*\*.*\*\*/.test(line)) {
+      const parts = line.split("**").map((chunk, index) => {
+        if (index % 2 === 1) {
+          // Bold parts
+          return <strong key={`${i}-${index}`}>{chunk}</strong>;
+        }
+        return chunk;
+      });
       formattedLines.push(
-        <h3 key={i} style={{ fontWeight: 700 }}>
-          {line.replace("###", "").trim()}
-        </h3>
+        <div key={i} className="flex gap-2 mb-2">
+          {parts}
+        </div>
       );
-    } else if (line.startsWith("* **")) {
-      // Handle bullet points with bold text
-      const parts = line
-        .split("**")
-        .map((chunk, index) =>
-          index % 2 === 0 ? chunk : <strong key={i + index}>{chunk}</strong>
-        );
-      formattedLines.push(<p key={i}>• {parts}</p>); // Render as a bullet point
-    } else if (line.startsWith("**")) {
-      // Handle bold text, split and alternate between regular and bold text
-      const boldFormatted = line
-        .split("**")
-        .map((chunk, index) =>
-          index % 2 === 0 ? chunk : <strong key={i + index}>{chunk}</strong>
-        );
-      formattedLines.push(<p key={i}>{boldFormatted}</p>);
-    } else if (line.startsWith("```")) {
-      // Handle code blocks
-      const codeBlock = [];
-      i++; // Skip opening ```
-      while (i < lines.length && !lines[i].startsWith("```")) {
+      continue;
+    }
+
+    // Handle bold sections within paragraphs
+    if (line.includes("**")) {
+      const parts = line.split("**").map((chunk, index) => {
+        if (index % 2 === 1) {
+          // Bold parts
+          return <strong key={`${i}-${index}`}>{chunk}</strong>;
+        }
+        return chunk;
+      });
+      formattedLines.push(
+        <p key={i} className="mb-4">
+          {parts}
+        </p>
+      );
+      continue;
+    }
+
+    // Handle code blocks
+    if (line.startsWith("```")) {
+      const codeBlock: string[] = [];
+      i++; // Skip the opening ```
+      while (i < lines.length && !lines[i].trim().startsWith("```")) {
         codeBlock.push(lines[i]);
         i++;
       }
       formattedLines.push(
-        <pre key={i} className="bg-dark px-3 py-4">
+        <pre key={i} className="bg-gray-100 p-4 rounded-lg my-4">
           <code>{codeBlock.join("\n")}</code>
         </pre>
       );
-    } else if (line.startsWith("* ")) {
-      const boldFormatted = line.split("*").map((chunk, index) =>
-        index % 2 === 0 ? (
-          chunk
-        ) : (
-          <li
-            key={i + index}
-            style={{ listStyleType: "circle", marginLeft: "10px" }}
-          >
-            {chunk}
-          </li>
-        )
-      );
-      formattedLines.push(boldFormatted);
-    } else if (line) {
-      // Handle regular paragraphs
-      formattedLines.push(<p key={i}>{line}</p>);
+      continue;
     }
+
+    // Handle bullet points
+    if (line.startsWith("* ")) {
+      const bulletContent = line.substring(2);
+      formattedLines.push(
+        <div key={i} className="flex gap-2 mb-2">
+          <span>•</span>
+          <span>{bulletContent}</span>
+        </div>
+      );
+      continue;
+    }
+
+    // Handle regular paragraphs
+    formattedLines.push(
+      <p key={i} className="mb-4">
+        {line}
+      </p>
+    );
   }
 
   return formattedLines;

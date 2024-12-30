@@ -1,11 +1,10 @@
 "use client";
 
-import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
-import ModelSelector from "../components/modelSelector";
-import Message from "../components/Messages";
-import Loader from "../components/Loader";
-import InputAsk from "../components/InputAsk";
+import ModelSelector from "./modelSelector";
+import Message from "./Messages";
+import Loader from "./Loader";
+import InputAsk from "./InputAsk";
 
 const MainChat = () => {
   const [inquiry, setInquiry] = useState("");
@@ -23,7 +22,7 @@ const MainChat = () => {
       />
       <div className="main-container d-flex align-items-center">
         <div className="container-fluid">
-          <div className="row justify-content-center response-container">
+          <div className="row justify-content-center">
             <div
               className="col-12 col-sm-8 col-md-6"
               style={{ marginLeft: "4em" }}

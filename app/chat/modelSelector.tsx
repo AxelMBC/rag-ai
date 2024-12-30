@@ -1,8 +1,7 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { handleSignOut } from "../lib/auth/signOutServerAction";
 import { useState } from "react";
-import { groqModels } from "../AIModels/groqModels";
+import { groqModels } from "../aiModels/groqModels";
 import "./modelSelector.scss";
 
 interface ModelSelectorProps {
@@ -21,7 +20,6 @@ const ModelSelector = ({
   selectedModel,
   setSelectedModel,
 }: ModelSelectorProps) => {
-  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSelect = (modelId: string) => {
@@ -30,16 +28,19 @@ const ModelSelector = ({
   };
 
   return (
-    <div className="dropdown d-flex justify-content-between">
-      <button
-        className="btn btn-secondary dropdown-toggle"
-        type="button"
-        id="modelDropdown"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-expanded={isOpen}
-      >
-        {selectedModel || "Select a Model"}
-      </button>
+    <div className="dropdown d-flex justify-content-start m-4">
+      <div className="pe-4">
+        <button
+          className="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="modelDropdown"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
+        >
+          {selectedModel || "Select a Model"}
+        </button>
+      </div>
+
       <div
         className={`dropdown-menu${isOpen ? " show" : ""}`}
         aria-labelledby="modelDropdown"
@@ -58,13 +59,6 @@ const ModelSelector = ({
             </div>
           ))}
       </div>
-      <button
-        className="btn btn-primary"
-        type="button"
-        onClick={() => router.push("/auth/sign-in")}
-      >
-        Sign In
-      </button>
       <button
         className="btn btn-danger"
         type="button"
