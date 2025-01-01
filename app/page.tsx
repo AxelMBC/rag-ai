@@ -1,6 +1,6 @@
 import { checkIsAuthenticated } from "./lib/auth/checkIsAuthenticated";
 import { redirect } from "next/navigation";
-import MainChat from "./chat/main";
+import MainChat from "./chat/Main";
 import "../styles/global.scss";
 
 const Home = async () => {

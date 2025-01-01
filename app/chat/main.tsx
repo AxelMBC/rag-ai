@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import ModelSelector from "./modelSelector";
-import Message from "./Messages";
-import Loader from "./Loader";
-import InputAsk from "./InputAsk";
+import Sidebar from "./Sidebar";
+import Message from "./Message";
+import Loader from "../utils/Loader";
+import PromptInput from "./PromptInput";
 
 const MainChat = () => {
   const [inquiry, setInquiry] = useState("");
@@ -16,7 +16,7 @@ const MainChat = () => {
   const [loading, setLoading] = useState(false);
   return (
     <>
-      <ModelSelector
+      <Sidebar
         selectedModel={selectedModel}
         setSelectedModel={setSelectedModel}
       />
@@ -46,7 +46,7 @@ const MainChat = () => {
           </div>
         </div>
 
-        <InputAsk
+        <PromptInput
           inquiry={inquiry}
           setInquiry={setInquiry}
           selectedModel={selectedModel}
