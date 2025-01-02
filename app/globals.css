@@ -40,3 +40,7 @@ a {
     color-scheme: dark;
   }
 }
+
+p {
+  margin: 0;
+}
