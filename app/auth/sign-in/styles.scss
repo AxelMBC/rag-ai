@@ -4,7 +4,6 @@
   justify-content: center;
   min-height: 100vh;
   background-color: hsl(0, 0%, 97.5%);
-  color: black;
 
   .signin-card {
     width: 20rem;
@@ -13,10 +12,6 @@
     box-shadow: 0 4px 8px hsl(0, 0%, 70%);
     background-color: white;
     text-align: center;
-
-    h2 {
-      padding-bottom: 50px;
-    }
 
     .form-container {
       display: flex;
@@ -87,7 +82,6 @@
           border: solid;
           border-radius: 1rem;
           background-color: transparent;
-          color: black;
 
           .google-icon {
             margin-right: 1.25rem;
