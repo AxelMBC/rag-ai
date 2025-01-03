@@ -1,8 +1,12 @@
 "use client";
 import { handleSignOut } from "../lib/auth/signOutServerAction";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { groqModels } from "../aiModels/groqModels";
 import "./modelSelector.scss";
+import { getAccountLinkStatus } from "../lib/auth/getAccountLinkStatusServer";
+import { unlinkGoogleAccount } from "../lib/auth/unlinkGoogleAccountServerAction";
+import { handleGoogleSignIn } from "../lib/auth/googleSignInServerAction";
+import { getUserName } from "../lib/auth/getUserNameServerAction";
 
 interface ModelSelectorProps {
   selectedModel: string;
@@ -21,6 +25,28 @@ const ModelSelector = ({
   setSelectedModel,
 }: ModelSelectorProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAccountLinked, setIsAccountLinked] = useState(false);
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const userInfo = async () => {
+      const name = await getUserName();
+      if (name) {
+        setUsername(name);
+      }
+    };
+    const accountLinkStatus = async () => {
+      await getAccountLinkStatus();
+      try {
+        const accountLinkStatus = await getAccountLinkStatus();
+        setIsAccountLinked(accountLinkStatus);
+      } catch (error) {
+        console.error("Error getting account link status", error);
+      }
+    };
+    userInfo();
+    accountLinkStatus();
+  }, []);
 
   const handleSelect = (modelId: string) => {
     setSelectedModel(modelId);
@@ -59,12 +85,32 @@ const ModelSelector = ({
             </div>
           ))}
       </div>
+
+      <div>{username}</div>
       <button
         className="btn btn-danger"
         type="button"
         onClick={() => handleSignOut()}
       >
         Sign Out
+      </button>
+      <button
+        className="link-account-button"
+        onClick={
+          isAccountLinked
+            ? async () => {
+                await unlinkGoogleAccount().then(() => {
+                  setIsAccountLinked(false);
+                });
+              }
+            : async () => {
+                await handleGoogleSignIn().then(() => {
+                  setIsAccountLinked(true);
+                });
+              }
+        }
+      >
+        {isAccountLinked ? "Unlink Google Account" : "Link Google Account"}
       </button>
     </div>
   );
