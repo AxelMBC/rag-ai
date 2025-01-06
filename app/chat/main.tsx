@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Sidebar from "./Sidebar";
+import Header from "./Header";
 import Message from "./Message";
 import Loader from "../utils/Loader";
 import PromptInput from "./PromptInput";
@@ -16,11 +16,14 @@ const MainChat = () => {
   const [loading, setLoading] = useState(false);
   return (
     <>
-      <Sidebar
+      <Header
         selectedModel={selectedModel}
         setSelectedModel={setSelectedModel}
       />
-      <div className="main-container d-flex align-items-center">
+      <div
+        className="main-container d-flex align-items-center"
+        style={{ paddingTop: "100px" }}
+      >
         <div className="container-fluid">
           <div className="row justify-content-center">
             <div
