@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import Header from "./Header";
+import Header from "../../components/shared/Header";
 import Message from "./Message";
-import Loader from "../utils/Loader";
+import Loader from "../../utils/Loader";
 import PromptInput from "./PromptInput";
+import "../dashboard.scss";
 
 const MainChat = () => {
   const [inquiry, setInquiry] = useState("");

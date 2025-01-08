@@ -1,12 +1,12 @@
 "use client";
-import { handleSignOut } from "../lib/auth/signOutServerAction";
+import { handleSignOut } from "../../lib/auth/signOutServerAction";
 import { useState, useEffect } from "react";
-import { groqModels } from "../aiModels/groqModels";
+import { groqModels } from "../../aiModels/groqModels";
 import "./modelSelector.scss";
-import { getAccountLinkStatus } from "../lib/auth/getAccountLinkStatusServer";
-import { unlinkGoogleAccount } from "../lib/auth/unlinkGoogleAccountServerAction";
-import { handleGoogleSignIn } from "../lib/auth/googleSignInServerAction";
-import { getUserName } from "../lib/auth/getUserNameServerAction";
+import { getAccountLinkStatus } from "../../lib/auth/getAccountLinkStatusServer";
+import { unlinkGoogleAccount } from "../../lib/auth/unlinkGoogleAccountServerAction";
+import { handleGoogleSignIn } from "../../lib/auth/googleSignInServerAction";
+import { getUserName } from "../../lib/auth/getUserNameServerAction";
 
 interface ModelSelectorProps {
   selectedModel: string;

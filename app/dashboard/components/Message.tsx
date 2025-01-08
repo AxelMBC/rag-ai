@@ -1,6 +1,6 @@
 "use client";
 
-import { formatResponse } from "../utils/formatResponse";
+import { formatResponse } from "../../utils/formatResponse";
 
 interface MessageProps {
   answerId: string;
