@@ -16,9 +16,10 @@ interface ModelSelectorProps {
 const SideBar = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAccountLinked, setIsAccountLinked] = useState(false);
-
   const [offCanvas, setOffCanvas] = useState(false);
   const [username, setUsername] = useState("");
+  const [updateUsername, setUpdateUsername] = useState(false);
+  const [newUsername, setNewUsername] = useState("");
 
   useEffect(() => {
     const userInfo = async () => {
@@ -46,6 +47,15 @@ const SideBar = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
   const handleCloseOffCanvas = () => {
     setOffCanvas(false);
     setIsOpen(false);
+  };
+
+  const handleSaveUsername = () => {
+    if (newUsername.trim()) {
+      setUsername(newUsername);
+      setUpdateUsername(false);
+      setIsOpen(false);
+      setNewUsername("");
+    }
   };
 
   return (
@@ -114,7 +124,7 @@ const SideBar = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
                   Sign Out
                 </button>
                 <button
-                  className="btn btn-secondary w-100"
+                  className="btn btn-secondary w-100 mb-2"
                   onClick={
                     isAccountLinked
                       ? async () => {
@@ -133,6 +143,31 @@ const SideBar = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
                     ? "Unlink Google Account"
                     : "Link Google Account"}
                 </button>
+                {!updateUsername ? (
+                  <button
+                    className="btn btn-secondary w-100"
+                    onClick={() => setUpdateUsername(true)}
+                  >
+                    Update Username
+                  </button>
+                ) : (
+                  <div className="update-username-container">
+                    <input
+                      className="styled-input"
+                      type="text"
+                      value={newUsername}
+                      onChange={(e) => setNewUsername(e.target.value)}
+                      placeholder="Username"
+                    />
+                    <button
+                      className="btn save-button"
+                      onClick={handleSaveUsername}
+                      aria-label="Save username"
+                    >
+                      <i className="fa-solid fa-floppy-disk"></i>
+                    </button>
+                  </div>
+                )}
               </div>
             )}
             <div

@@ -21,31 +21,17 @@ body {
 
 .main-container {
   min-height: 100vh;
+  padding-top: 90px;
   display: flex;
   flex-direction: column;
 }
 
-// .content {
-//   width: 60%;
+.prompt {
+  color: $text-color;
+}
 
-//   @media screen and (max-width: 768px) {
-//     width: 100%;
-//   }
-// }
-
-.response-box {
-  background-color: rgba(255, 255, 255, 0.05);
-  padding: 15px;
-  border-radius: $border-radius;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-
-  h5 {
-    margin-bottom: 10px;
-  }
-
-  p {
-    color: $text-color;
-  }
+.answers-container {
+  padding-bottom: 200px; // Moved from inline style
 }
 
 .loader-container {

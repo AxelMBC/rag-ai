@@ -61,7 +61,7 @@ const InputAsk = ({
     <div className="sticky-chat-input">
       <div className="container-fluid">
         <div className="row justify-content-center">
-          <div className="col-12 col-md-6">
+          <div className="col-12 col-md-11 col-xl-8 col-xxl-6">
             <div className="input-group" style={{ marginLeft: "2em" }}>
               <input
                 className="form-control me-4"
