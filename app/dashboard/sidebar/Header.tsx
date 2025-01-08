@@ -67,11 +67,13 @@ const SideBar = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
             >
               {selectedModel || "Select a Model"}
               {groqModels.map((model) => {
-                return (
-                  <option key={model.id} value={model.id}>
-                    {model.id}
-                  </option>
-                );
+                if (model.type === "text") {
+                  return (
+                    <option key={model.id} value={model.id}>
+                      {model.id}
+                    </option>
+                  );
+                }
               })}
             </select>
           </div>
