@@ -7,7 +7,7 @@ import Loader from "../../utils/Loader";
 import PromptInput from "./PromptInput";
 import "../dashboard.scss";
 
-const MainChat = () => {
+const ChatWindow = () => {
   const [inquiry, setInquiry] = useState("");
   const [answers, setAnswers] = useState<
     { id: string; author: string; message: string }[]
@@ -63,4 +63,4 @@ const MainChat = () => {
   );
 };
 
-export default MainChat;
+export default ChatWindow;

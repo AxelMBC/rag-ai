@@ -16,6 +16,7 @@ interface ModelSelectorProps {
 const Header = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAccountLinked, setIsAccountLinked] = useState(false);
+  const [isModelOpen, setIsModelOpen] = useState(false);
   const [offCanvas, setOffCanvas] = useState(false);
   const [username, setUsername] = useState("");
 
@@ -40,7 +41,7 @@ const Header = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
 
   const handleSelect = (modelId: string) => {
     setSelectedModel(modelId);
-    setIsOpen(false);
+    setIsModelOpen(false);
   };
 
   const handleCloseOffCanvas = () => {
@@ -60,15 +61,20 @@ const Header = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
             onClick={() => setOffCanvas(true)}
           ></i>
           <div className="pe-4">
-            <button
+            <select
               className="btn btn-secondary dropdown-toggle"
-              type="button"
               id="modelDropdown"
-              onClick={() => setIsOpen(!isOpen)}
-              aria-expanded={isOpen}
+              onChange={(e) => handleSelect(e.target.value)}
             >
               {selectedModel || "Select a Model"}
-            </button>
+              {groqModels.map((model) => {
+                return (
+                  <option key={model.id} value={model.id}>
+                    {model.id}
+                  </option>
+                );
+              })}
+            </select>
           </div>
         </div>
       </div>
@@ -81,6 +87,20 @@ const Header = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
           </button>
           <h3>Account Options</h3>
 
+          <select
+            className="btn btn-secondary dropdown-toggle mt-4"
+            id="modelDropdown"
+            onChange={(e) => handleSelect(e.target.value)}
+          >
+            {selectedModel || "Select a Model"}
+            {groqModels.map((model) => {
+              return (
+                <option key={model.id} value={model.id}>
+                  {model.id}
+                </option>
+              );
+            })}
+          </select>
           {/* Footer section at the bottom */}
           <div className="offcanvas-footer position-relative">
             {isOpen && (
