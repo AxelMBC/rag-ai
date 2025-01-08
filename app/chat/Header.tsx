@@ -13,16 +13,10 @@ interface ModelSelectorProps {
   setSelectedModel: (model: string) => void;
 }
 
-interface ModelOptionsType {
-  id: string;
-  owned_by: string;
-  type: string;
-  description: string;
-}
-
 const Header = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAccountLinked, setIsAccountLinked] = useState(false);
+  const [offCanvas, setOffCanvas] = useState(false);
   const [username, setUsername] = useState("");
 
   useEffect(() => {
@@ -33,7 +27,6 @@ const Header = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
       }
     };
     const accountLinkStatus = async () => {
-      await getAccountLinkStatus();
       try {
         const accountLinkStatus = await getAccountLinkStatus();
         setIsAccountLinked(accountLinkStatus);
@@ -51,52 +44,76 @@ const Header = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
   };
 
   return (
-    <div
-      className="position-fixed"
-      style={{ backgroundColor: "#121212", width: "100%" }}
-    >
-      <div className="d-flex align-items-center justify-content-start m-4">
-        <i className="fa-solid fa-bars fa-xl me-4"></i>
-        <div className="pe-4">
+    <>
+      <div
+        className="position-fixed"
+        style={{ backgroundColor: "#121212", width: "100%" }}
+      >
+        <div className="d-flex align-items-center justify-content-start m-4">
+          <i
+            className="fa-solid fa-bars fa-xl me-4 cursor-pointer"
+            onClick={() => setOffCanvas(true)}
+          ></i>
+          <div className="pe-4">
+            <button
+              className="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="modelDropdown"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-expanded={isOpen}
+            >
+              {selectedModel || "Select a Model"}
+            </button>
+          </div>
+
+          <div>{username}</div>
+        </div>
+      </div>
+
+      {/* Off-Canvas Sidebar */}
+      <div className={`offcanvas-container ${offCanvas ? "active" : ""}`}>
+        <div className="offcanvas-content">
+          <button className="btn-close" onClick={() => setOffCanvas(false)}>
+            &times;
+          </button>
+          <h3>Sidebar Content</h3>
+          <div>{username}</div>
           <button
-            className="btn btn-secondary dropdown-toggle"
+            className="btn btn-danger"
             type="button"
-            id="modelDropdown"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-expanded={isOpen}
+            onClick={() => handleSignOut()}
           >
-            {selectedModel || "Select a Model"}
+            Sign Out
+          </button>
+          <button
+            className="link-account-button"
+            onClick={
+              isAccountLinked
+                ? async () => {
+                    await unlinkGoogleAccount().then(() => {
+                      setIsAccountLinked(false);
+                    });
+                  }
+                : async () => {
+                    await handleGoogleSignIn().then(() => {
+                      setIsAccountLinked(true);
+                    });
+                  }
+            }
+          >
+            {isAccountLinked ? "Unlink Google Account" : "Link Google Account"}
           </button>
         </div>
-
-        <div>{username}</div>
-        {/* <button
-          className="btn btn-danger"
-          type="button"
-          onClick={() => handleSignOut()}
-        >
-          Sign Out
-        </button>
-        <button
-          className="link-account-button"
-          onClick={
-            isAccountLinked
-              ? async () => {
-                  await unlinkGoogleAccount().then(() => {
-                    setIsAccountLinked(false);
-                  });
-                }
-              : async () => {
-                  await handleGoogleSignIn().then(() => {
-                    setIsAccountLinked(true);
-                  });
-                }
-          }
-        >
-          {isAccountLinked ? "Unlink Google Account" : "Link Google Account"}
-        </button> */}
       </div>
-    </div>
+
+      {/* Overlay */}
+      {offCanvas && (
+        <div
+          className="offcanvas-overlay"
+          onClick={() => setOffCanvas(false)}
+        ></div>
+      )}
+    </>
   );
 };
 
