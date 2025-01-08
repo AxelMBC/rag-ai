@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Header from "../../components/shared/Header";
+import SideBar from "../sidebar/Header";
 import Message from "./Message";
 import Loader from "../../utils/Loader";
 import PromptInput from "./PromptInput";
@@ -17,7 +17,7 @@ const ChatWindow = () => {
   const [loading, setLoading] = useState(false);
   return (
     <>
-      <Header
+      <SideBar
         selectedModel={selectedModel}
         setSelectedModel={setSelectedModel}
       />

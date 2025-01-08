@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Roboto_Mono } from "next/font/google";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./globals.css";
 
 const roboto_mono = Roboto_Mono({
   subsets: ["latin"],

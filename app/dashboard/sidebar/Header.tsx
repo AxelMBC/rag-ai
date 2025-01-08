@@ -13,10 +13,10 @@ interface ModelSelectorProps {
   setSelectedModel: (model: string) => void;
 }
 
-const Header = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
+const SideBar = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAccountLinked, setIsAccountLinked] = useState(false);
-  const [isModelOpen, setIsModelOpen] = useState(false);
+
   const [offCanvas, setOffCanvas] = useState(false);
   const [username, setUsername] = useState("");
 
@@ -41,7 +41,6 @@ const Header = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
 
   const handleSelect = (modelId: string) => {
     setSelectedModel(modelId);
-    setIsModelOpen(false);
   };
 
   const handleCloseOffCanvas = () => {
@@ -158,4 +157,4 @@ const Header = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
   );
 };
 
-export default Header;
+export default SideBar;
