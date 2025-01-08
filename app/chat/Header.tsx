@@ -43,6 +43,11 @@ const Header = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
     setIsOpen(false);
   };
 
+  const handleCloseOffCanvas = () => {
+    setOffCanvas(false);
+    setIsOpen(false);
+  };
+
   return (
     <>
       <div
@@ -65,44 +70,60 @@ const Header = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
               {selectedModel || "Select a Model"}
             </button>
           </div>
-
-          <div>{username}</div>
         </div>
       </div>
 
       {/* Off-Canvas Sidebar */}
       <div className={`offcanvas-container ${offCanvas ? "active" : ""}`}>
         <div className="offcanvas-content">
-          <button className="btn-close" onClick={() => setOffCanvas(false)}>
+          <button className="btn-close" onClick={() => handleCloseOffCanvas()}>
             &times;
           </button>
-          <h3>Sidebar Content</h3>
-          <div>{username}</div>
-          <button
-            className="btn btn-danger"
-            type="button"
-            onClick={() => handleSignOut()}
-          >
-            Sign Out
-          </button>
-          <button
-            className="link-account-button"
-            onClick={
-              isAccountLinked
-                ? async () => {
-                    await unlinkGoogleAccount().then(() => {
-                      setIsAccountLinked(false);
-                    });
+          <h3>Account Options</h3>
+
+          {/* Footer section at the bottom */}
+          <div className="offcanvas-footer position-relative">
+            {isOpen && (
+              <div className="hover-menu position-absolute">
+                <button
+                  className="btn btn-danger w-100 mb-2"
+                  type="button"
+                  onClick={() => handleSignOut()}
+                >
+                  Sign Out
+                </button>
+                <button
+                  className="btn btn-secondary w-100"
+                  onClick={
+                    isAccountLinked
+                      ? async () => {
+                          await unlinkGoogleAccount().then(() => {
+                            setIsAccountLinked(false);
+                          });
+                        }
+                      : async () => {
+                          await handleGoogleSignIn().then(() => {
+                            setIsAccountLinked(true);
+                          });
+                        }
                   }
-                : async () => {
-                    await handleGoogleSignIn().then(() => {
-                      setIsAccountLinked(true);
-                    });
-                  }
-            }
-          >
-            {isAccountLinked ? "Unlink Google Account" : "Link Google Account"}
-          </button>
+                >
+                  {isAccountLinked
+                    ? "Unlink Google Account"
+                    : "Link Google Account"}
+                </button>
+              </div>
+            )}
+            <div
+              className="custom-username-button d-inline-flex align-items-center"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              <p className="pe-3 mb-0">{username ? username : "User"}</p>
+              <div className="user-icon-wrapper">
+                <i className="fa-solid fa-user"></i>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
