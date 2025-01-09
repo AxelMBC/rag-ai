@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SideBar from "./sidebar/Header";
+import SideBar from "./sidebar";
 import Message from "./components/Message";
 import Loader from "../utils/Loader";
 import PromptInput from "./components/PromptInput";
