@@ -114,6 +114,7 @@ const SideBar = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
               }
             })}
           </select>
+
           {/* Footer section at the bottom */}
           <div className="offcanvas-footer position-relative">
             {isOpen && (

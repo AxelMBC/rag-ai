@@ -153,11 +153,6 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       transition: background-color 0.3s ease;
 
-      i {
-        color: #ffffff;
-        font-size: 1.2rem;
-      }
-
       &:hover {
         background-color: black;
       }
@@ -175,12 +170,15 @@
       flex: 1; // Ensures the input field grows to take up available space
       padding: 10px;
       border: none;
-      border-radius: 25px;
+      border-radius: 15px;
       background-color: rgba(255, 255, 255, 0.2);
       color: white;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       font-size: 1rem;
       width: 90%;
+      &::placeholder {
+        color: silver;
+      }
 
       &:focus {
         outline: none;
@@ -189,26 +187,18 @@
     }
 
     .save-button {
-      flex-shrink: 0; // Prevents the button from shrinking
-      padding: 10px;
-      font-size: 1rem;
-      border-radius: 20px;
-      background-color: #28a745; // Green color
-      color: white;
-      border: none;
-      width: 50px; // Ensures the button width is fixed
-      text-align: center;
+      border-radius: 100px;
+      width: 36px;
+      height: 36px;
       display: flex;
       align-items: center;
-      justify-content: center; // Centers the icon inside the button
-      transition: background-color 0.3s;
+      justify-content: center;
+      transition: all 0.3s ease;
+      color: white;
 
       &:hover {
-        background-color: #218838;
-      }
-
-      i {
-        font-size: 1rem;
+        border-radius: 100px;
+        background-color: rgba(255, 255, 255, 0.1);
       }
     }
   }
