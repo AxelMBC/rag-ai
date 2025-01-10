@@ -1,4 +1,5 @@
 "use client";
+import { useSession } from "next-auth/react";
 import { handleSignOut } from "../../lib/auth/signOutServerAction";
 import { useState, useEffect } from "react";
 import { groqModels } from "../../aiModels/groqModels";
@@ -20,6 +21,15 @@ const SideBar = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
   const [username, setUsername] = useState("");
   const [updateUsername, setUpdateUsername] = useState(false);
   const [newUsername, setNewUsername] = useState("");
+  const { update } = useSession();
+
+  const handleUpdateUsername = () => {
+    setUsername(newUsername);
+    console.log("newUsername: ", newUsername);
+    update({ name: newUsername });
+    setUpdateUsername(false);
+    setIsOpen(false);
+  };
 
   useEffect(() => {
     const userInfo = async () => {
@@ -47,15 +57,6 @@ const SideBar = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
   const handleCloseOffCanvas = () => {
     setOffCanvas(false);
     setIsOpen(false);
-  };
-
-  const handleSaveUsername = () => {
-    if (newUsername.trim()) {
-      setUsername(newUsername);
-      setUpdateUsername(false);
-      setIsOpen(false);
-      setNewUsername("");
-    }
   };
 
   return (
@@ -164,7 +165,7 @@ const SideBar = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
                     />
                     <button
                       className="btn save-button"
-                      onClick={handleSaveUsername}
+                      onClick={() => handleUpdateUsername()}
                       aria-label="Save username"
                     >
                       <i className="fa-solid fa-floppy-disk"></i>

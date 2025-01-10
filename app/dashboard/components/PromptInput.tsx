@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 
-interface InputAskProps {
+interface PromptInputProps {
   inquiry: string;
   setInquiry: (value: string) => void;
   selectedModel: string;
@@ -12,14 +12,14 @@ interface InputAskProps {
   setLoading: (value: boolean) => void;
 }
 
-const InputAsk = ({
+const PromptInput = ({
   inquiry,
   setInquiry,
   selectedModel,
   answers,
   setAnswers,
   setLoading,
-}: InputAskProps) => {
+}: PromptInputProps) => {
   const router = useRouter();
   const handleSubmit = async () => {
     setLoading(true);
@@ -103,4 +103,4 @@ const InputAsk = ({
   );
 };
 
-export default InputAsk;
+export default PromptInput;

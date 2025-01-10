@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto_Mono } from "next/font/google";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { SessionProvider } from "next-auth/react";
 
 const roboto_mono = Roboto_Mono({
   subsets: ["latin"],
@@ -21,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto_mono.variable}`}>{children}</body>
+      <SessionProvider>
+        <body className={`${roboto_mono.variable}`}>{children}</body>
+      </SessionProvider>
     </html>
   );
 }
