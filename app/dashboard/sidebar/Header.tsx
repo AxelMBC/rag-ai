@@ -2,7 +2,6 @@
 import { useSession } from "next-auth/react";
 import { handleSignOut } from "../../lib/auth/signOutServerAction";
 import { useState, useEffect } from "react";
-import { groqModels } from "../../aiModels/groqModels";
 import "./modelSelector.scss";
 import { getAccountLinkStatus } from "../../lib/auth/getAccountLinkStatusServer";
 import { unlinkGoogleAccount } from "../../lib/auth/unlinkGoogleAccountServerAction";
@@ -88,22 +87,10 @@ const SideBar = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
           </button>
           <h3>Account Options</h3>
 
-          <select
-            className="btn btn-secondary dropdown-toggle mt-4"
-            id="modelDropdown"
-            onChange={(e) => handleSelect(e.target.value)}
-          >
-            {selectedModel || "Select a Model"}
-            {groqModels.map((model) => {
-              if (model.type === "text") {
-                return (
-                  <option key={model.id} value={model.id}>
-                    {model.id}
-                  </option>
-                );
-              }
-            })}
-          </select>
+          <SelectModel
+            handleSelect={handleSelect}
+            selectedModel={selectedModel}
+          />
 
           {/* Footer section at the bottom */}
           <div className="offcanvas-footer position-relative">

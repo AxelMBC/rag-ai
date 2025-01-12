@@ -10,7 +10,7 @@ interface SelectModelProps {
 const SelectModel = ({ selectedModel, handleSelect }: SelectModelProps) => {
   return (
     <select
-      className="btn btn-secondary dropdown-toggle"
+      className="btn btn-secondary"
       id="modelDropdown"
       onChange={(e) => handleSelect(e.target.value)}
       defaultValue={selectedModel}
