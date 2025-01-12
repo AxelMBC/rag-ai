@@ -13,15 +13,10 @@ export async function POST(request: RequestProps) {
 
   const { inquiry, model } = await request.json();
 
-  const messageThread = await openai.beta.threads.create({
-    messages: [
-      {
-        role: "user",
-        content: inquiry,
-      },
-    ],
+  const response = await openai.chat.completions.create({
+    messages: [{ role: "user", content: inquiry }],
+    model,
   });
-  console.log("messageThread: ", messageThread);
 
   return new Response(JSON.stringify({ message: "Groq Response", response }), {
     status: 200,
