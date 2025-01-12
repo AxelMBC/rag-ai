@@ -12,7 +12,7 @@ const ChatWindow = () => {
   const [answers, setAnswers] = useState<
     { id: string; author: string; message: string }[]
   >([]);
-  const [selectedModel, setSelectedModel] = useState("llama3-8b-8192");
+  const [selectedModel, setSelectedModel] = useState("gpt-4o-mini");
   const [loading, setLoading] = useState(false);
 
   return (

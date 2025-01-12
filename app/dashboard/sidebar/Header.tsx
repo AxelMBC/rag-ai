@@ -8,6 +8,7 @@ import { getAccountLinkStatus } from "../../lib/auth/getAccountLinkStatusServer"
 import { unlinkGoogleAccount } from "../../lib/auth/unlinkGoogleAccountServerAction";
 import { handleGoogleSignIn } from "../../lib/auth/googleSignInServerAction";
 import { getUserName } from "../../lib/auth/getUserNameServerAction";
+import SelectModel from "./SelectModel";
 
 interface ModelSelectorProps {
   selectedModel: string;
@@ -71,22 +72,10 @@ const SideBar = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
             onClick={() => setOffCanvas(true)}
           ></i>
           <div className="pe-4">
-            <select
-              className="btn btn-secondary dropdown-toggle"
-              id="modelDropdown"
-              onChange={(e) => handleSelect(e.target.value)}
-            >
-              {selectedModel || "Select a Model"}
-              {groqModels.map((model) => {
-                if (model.type === "text") {
-                  return (
-                    <option key={model.id} value={model.id}>
-                      {model.id}
-                    </option>
-                  );
-                }
-              })}
-            </select>
+            <SelectModel
+              handleSelect={handleSelect}
+              selectedModel={selectedModel}
+            />
           </div>
         </div>
       </div>
