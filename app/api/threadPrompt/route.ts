@@ -1,24 +1,48 @@
 import OpenAI from "openai";
 
 interface RequestProps {
-  json():
-    | { inquiry: string; model: string }
-    | PromiseLike<{ inquiry: string; model: string }>;
+  json(): Promise<{
+    inquiry: string;
+    model: string;
+    answers?: { id: string; author: string; message: string }[];
+  }>;
 }
 
 export async function POST(request: RequestProps) {
   const openai = new OpenAI({
-    apiKey: process.env.GROQ_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY,
   });
 
-  const { inquiry, model } = await request.json();
+  const { inquiry, model, answers } = await request.json();
 
-  const response = await openai.chat.completions.create({
-    messages: [{ role: "user", content: inquiry }],
-    model,
-  });
+  // Map the answers into the correct format for ChatCompletionMessageParam
+  const messages =
+    answers?.map(({ author, message }) => ({
+      role: author === "User" ? "user" : "assistant",
+      content: message,
+    })) || [];
 
-  return new Response(JSON.stringify({ message: "Groq Response", response }), {
-    status: 200,
-  });
+  // Add the user's current inquiry to the thread
+  messages.push({ role: "user", content: inquiry });
+
+  try {
+    const threadResponse = await openai.chat.completions.create({
+      model,
+      messages, // Now conforms to ChatCompletionMessageParam[]
+    });
+
+    return new Response(
+      JSON.stringify({
+        thread: threadResponse,
+        message: "Response with context recall",
+      }),
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error in OpenAI API:", error);
+    return new Response(
+      JSON.stringify({ error: "Failed to fetch response from OpenAI" }),
+      { status: 500 }
+    );
+  }
 }
