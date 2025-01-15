@@ -9,7 +9,6 @@ interface MessageProps {
 }
 
 const Message = ({ answerId, answerAuthor, answerMessage }: MessageProps) => {
-  const formattedAuthor = answerAuthor === "User" ? "You" : "Assistant";
   return (
     <div id={answerId} className="response-box bg-transparent" key={answerId}>
       <h5
@@ -18,7 +17,7 @@ const Message = ({ answerId, answerAuthor, answerMessage }: MessageProps) => {
           color: `${answerAuthor === "User" ? "#009bd6" : "red"}`,
         }}
       >
-        {formattedAuthor}:
+        {answerAuthor}:
       </h5>
       <span>{formatResponse(answerMessage)}</span>
     </div>

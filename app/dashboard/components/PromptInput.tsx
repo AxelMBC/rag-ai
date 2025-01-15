@@ -58,11 +58,12 @@ const PromptInput = ({
 
     const machineId = uuidv4();
     const data = await res?.json();
+    console.log("data: ", data);
 
     // Add the new response to the answers
     const newAnswer = {
       id: machineId,
-      author: "Assistant", // Set this to "Assistant" explicitly
+      author: data.thread.model, // Set this to "Assistant" explicitly
       message: data.thread.choices[0].message.content,
     };
 

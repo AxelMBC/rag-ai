@@ -30,14 +30,15 @@ export async function POST(request: RequestProps) {
       model,
       messages, // Now conforms to ChatCompletionMessageParam[]
     });
-
-    return new Response(
+    const response = new Response(
       JSON.stringify({
         thread: threadResponse,
         message: "Response with context recall",
       }),
       { status: 200 }
     );
+
+    return response;
   } catch (error) {
     console.error("Error in OpenAI API:", error);
     return new Response(
