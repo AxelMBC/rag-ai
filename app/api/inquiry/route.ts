@@ -8,20 +8,15 @@ interface RequestProps {
 
 export async function POST(request: RequestProps) {
   const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: process.env.GROQ_API_KEY,
   });
 
   const { inquiry, model } = await request.json();
 
-  const messageThread = await openai.beta.threads.create({
-    messages: [
-      {
-        role: "user",
-        content: inquiry,
-      },
-    ],
+  const response = await openai.chat.completions.create({
+    messages: [{ role: "user", content: inquiry }],
+    model,
   });
-  console.log("messageThread: ", messageThread);
 
   return new Response(JSON.stringify({ message: "Groq Response", response }), {
     status: 200,

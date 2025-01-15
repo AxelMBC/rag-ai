@@ -44,38 +44,19 @@ const PromptInput = ({
     setInquiry("");
   };
 
-  const handleSubmitThread = async () => {
-    setLoading(true);
-
-    const res = await fetch("/api/threadPrompt", {
-      method: "POST",
-      body: JSON.stringify({
-        inquiry,
-        model: selectedModel,
-        answers, // Pass the existing conversation context
-      }),
-    });
-
-    const machineId = uuidv4();
-    const data = await res?.json();
-    console.log("data: ", data);
-
-    // Add the new response to the answers
-    const newAnswer = {
-      id: machineId,
-      author: data.thread.model, // Set this to "Assistant" explicitly
-      message: data.thread.choices[0].message.content,
-    };
-
-    const userId = uuidv4();
-    answers.push({ id: userId, author: "User", message: inquiry });
-    setAnswers([...answers, newAnswer]);
-
-    router.push(`#${machineId}`);
-    setLoading(false);
-    setInquiry("");
-  };
-
+  // const handleSubmitThread = async () => {
+  //   setLoading(true);
+  //   const res = await fetch("/api/inquiryHistory", {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       inquiry: JSON.stringify(answers),
+  //       model: selectedModel,
+  //     }),
+  //   });
+  //   const data = await res?.json();
+  //   console.log("Data RESPONSE: ", data);
+  //   setLoading(false);
+  // };
   return (
     <div className="sticky-chat-input">
       <div className="container-fluid">
@@ -104,7 +85,7 @@ const PromptInput = ({
               </div>
               <div
                 className="d-flex justify-content-center align-items-center cursor-pointer ms-2"
-                onClick={() => handleSubmitThread()}
+                onClick={() => console.log("test click")}
                 style={{
                   width: "40px",
                   height: "40px",
