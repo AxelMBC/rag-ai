@@ -8,7 +8,7 @@ interface RequestProps {
 
 export async function POST(request: RequestProps) {
   const openai = new OpenAI({
-    apiKey: process.env.GROQ_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY,
   });
 
   const { inquiry, model } = await request.json();

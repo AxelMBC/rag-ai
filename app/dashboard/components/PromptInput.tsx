@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 
-interface PromptInputProps {
+interface InputAskProps {
   inquiry: string;
   setInquiry: (value: string) => void;
   selectedModel: string;
@@ -12,14 +12,14 @@ interface PromptInputProps {
   setLoading: (value: boolean) => void;
 }
 
-const PromptInput = ({
+const InputAsk = ({
   inquiry,
   setInquiry,
   selectedModel,
   answers,
   setAnswers,
   setLoading,
-}: PromptInputProps) => {
+}: InputAskProps) => {
   const router = useRouter();
   const handleSubmit = async () => {
     setLoading(true);
@@ -44,19 +44,19 @@ const PromptInput = ({
     setInquiry("");
   };
 
-  // const handleSubmitThread = async () => {
-  //   setLoading(true);
-  //   const res = await fetch("/api/inquiryHistory", {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       inquiry: JSON.stringify(answers),
-  //       model: selectedModel,
-  //     }),
-  //   });
-  //   const data = await res?.json();
-  //   console.log("Data RESPONSE: ", data);
-  //   setLoading(false);
-  // };
+  const handleSubmitThread = async () => {
+    setLoading(true);
+    const res = await fetch("/api/inquiryHistory", {
+      method: "POST",
+      body: JSON.stringify({
+        inquiry: JSON.stringify(answers),
+        model: selectedModel,
+      }),
+    });
+    const data = await res?.json();
+    console.log("Data RESPONSE: ", data);
+    setLoading(false);
+  };
   return (
     <div className="sticky-chat-input">
       <div className="container-fluid">
@@ -85,7 +85,7 @@ const PromptInput = ({
               </div>
               <div
                 className="d-flex justify-content-center align-items-center cursor-pointer ms-2"
-                onClick={() => console.log("test click")}
+                onClick={() => handleSubmitThread()}
                 style={{
                   width: "40px",
                   height: "40px",
@@ -103,4 +103,4 @@ const PromptInput = ({
   );
 };
 
-export default PromptInput;
+export default InputAsk;
