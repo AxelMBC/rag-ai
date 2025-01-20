@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import SideBar from "./sidebar/Header";
 import Message from "./components/Message";
@@ -7,19 +6,26 @@ import Loader from "../utils/Loader";
 import PromptInput from "./components/PromptInput";
 import "./dashboard.scss";
 
+interface ChatMessage {
+  id: string;
+  author: string; // "User" or the model name, e.g. "llama3-8b-8192"
+  message: string;
+}
+
 const ChatWindow = () => {
-  const [inquiry, setInquiry] = useState("");
-  const [answers, setAnswers] = useState<
-    { id: string; author: string; message: string }[]
-  >([]);
+  // Use the shape {id, author, message}
+  const [answers, setAnswers] = useState<ChatMessage[]>([]);
   const [selectedModel, setSelectedModel] = useState("llama3-8b-8192");
   const [loading, setLoading] = useState(false);
+  const [conversationalMemory, setConversationalMemory] = useState(false);
 
   return (
     <>
       <SideBar
         selectedModel={selectedModel}
         setSelectedModel={setSelectedModel}
+        conversationalMemory={conversationalMemory}
+        setConversationalMemory={setConversationalMemory}
       />
       <div className="main-container d-flex align-items-center">
         <div className="container-fluid">
@@ -41,8 +47,8 @@ const ChatWindow = () => {
           </div>
         </div>
         <PromptInput
-          inquiry={inquiry}
-          setInquiry={setInquiry}
+          // pass conversation memory setting
+          conversationalMemory={conversationalMemory}
           selectedModel={selectedModel}
           answers={answers}
           setAnswers={setAnswers}

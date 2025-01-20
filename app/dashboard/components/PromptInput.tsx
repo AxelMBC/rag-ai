@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 
 interface InputAskProps {
-  inquiry: string;
-  setInquiry: (value: string) => void;
+  conversationalMemory: boolean;
   selectedModel: string;
   answers: { id: string; author: string; message: string }[];
   setAnswers: (
@@ -13,21 +13,32 @@ interface InputAskProps {
 }
 
 const InputAsk = ({
-  inquiry,
-  setInquiry,
+  conversationalMemory,
   selectedModel,
   answers,
   setAnswers,
   setLoading,
 }: InputAskProps) => {
   const router = useRouter();
+  const [inquiry, setInquiry] = useState("");
+  console.log("answers: ", answers);
   const handleSubmit = async () => {
     setLoading(true);
 
-    const res = await fetch("/api/inquiry", {
-      method: "POST",
-      body: JSON.stringify({ inquiry, model: selectedModel }),
-    });
+    const res = conversationalMemory
+      ? await fetch("/api/inquiry", {
+          method: "POST",
+          body: JSON.stringify({ answers, model: selectedModel }),
+        })
+      : await fetch("/api/inquiryNoMemory", {
+          method: "POST",
+          body: JSON.stringify({ inquiry, model: selectedModel }),
+        });
+
+    // const res = await fetch("/api/inquiry", {
+    //   method: "POST",
+    //   body: JSON.stringify({ inquiry, model: selectedModel }),
+    // });
 
     const machineId = uuidv4();
     const data = await res?.json();
@@ -44,19 +55,6 @@ const InputAsk = ({
     setInquiry("");
   };
 
-  const handleSubmitThread = async () => {
-    setLoading(true);
-    const res = await fetch("/api/inquiryHistory", {
-      method: "POST",
-      body: JSON.stringify({
-        inquiry: JSON.stringify(answers),
-        model: selectedModel,
-      }),
-    });
-    const data = await res?.json();
-    console.log("Data RESPONSE: ", data);
-    setLoading(false);
-  };
   return (
     <div className="sticky-chat-input">
       <div className="container-fluid">
@@ -82,18 +80,6 @@ const InputAsk = ({
                 }}
               >
                 <i className="fas fa-arrow-up" style={{ color: "black" }} />
-              </div>
-              <div
-                className="d-flex justify-content-center align-items-center cursor-pointer ms-2"
-                onClick={() => handleSubmitThread()}
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "50%",
-                  backgroundColor: "white",
-                }}
-              >
-                <i className="fas fa-vial" style={{ color: "black" }} />
               </div>
             </div>
           </div>

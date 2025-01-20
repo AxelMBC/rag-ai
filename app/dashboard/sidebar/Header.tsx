@@ -8,13 +8,21 @@ import { unlinkGoogleAccount } from "../../lib/auth/unlinkGoogleAccountServerAct
 import { handleGoogleSignIn } from "../../lib/auth/googleSignInServerAction";
 import { getUserName } from "../../lib/auth/getUserNameServerAction";
 import SelectModel from "./SelectModel";
+import Toggle from "./Toggle";
 
 interface ModelSelectorProps {
   selectedModel: string;
   setSelectedModel: (model: string) => void;
+  conversationalMemory: boolean;
+  setConversationalMemory: (value: boolean) => void;
 }
 
-const SideBar = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
+const SideBar = ({
+  selectedModel,
+  setSelectedModel,
+  conversationalMemory,
+  setConversationalMemory,
+}: ModelSelectorProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAccountLinked, setIsAccountLinked] = useState(false);
   const [offCanvas, setOffCanvas] = useState(false);
@@ -76,6 +84,12 @@ const SideBar = ({ selectedModel, setSelectedModel }: ModelSelectorProps) => {
               selectedModel={selectedModel}
             />
           </div>
+          <Toggle
+            conversationalMemory={conversationalMemory}
+            setConversationalMemory={setConversationalMemory}
+          />
+          <div className="d-flex justify-content-center align-items-center"></div>
+          <p className="text-white ms-4 mb-0 fw-bold">AI Memory</p>
         </div>
       </div>
 
