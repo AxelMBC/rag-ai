@@ -1,14 +1,14 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { handleSignOut } from "../../lib/auth/signOutServerAction";
 import { useState, useEffect } from "react";
 import "./modelSelector.scss";
+import { handleSignOut } from "../../lib/auth/signOutServerAction";
 import { getAccountLinkStatus } from "../../lib/auth/getAccountLinkStatusServer";
 import { unlinkGoogleAccount } from "../../lib/auth/unlinkGoogleAccountServerAction";
 import { handleGoogleSignIn } from "../../lib/auth/googleSignInServerAction";
 import { getUserName } from "../../lib/auth/getUserNameServerAction";
-import SelectModel from "./SelectModel";
 import Toggle from "./Toggle";
+import SelectModel from "./SelectModel";
 
 interface ModelSelectorProps {
   selectedModel: string;
@@ -26,14 +26,13 @@ const SideBar = ({
   const [isOpen, setIsOpen] = useState(false);
   const [isAccountLinked, setIsAccountLinked] = useState(false);
   const [offCanvas, setOffCanvas] = useState(false);
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState("User");
   const [updateUsername, setUpdateUsername] = useState(false);
   const [newUsername, setNewUsername] = useState("");
   const { update } = useSession();
 
   const handleUpdateUsername = () => {
     setUsername(newUsername);
-    console.log("newUsername: ", newUsername);
     update({ name: newUsername });
     setUpdateUsername(false);
     setIsOpen(false);
@@ -44,6 +43,7 @@ const SideBar = ({
       const name = await getUserName();
       if (name) {
         setUsername(name);
+        setNewUsername(name);
       }
     };
     const accountLinkStatus = async () => {

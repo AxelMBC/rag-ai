@@ -4,48 +4,49 @@
   height: 25px;
   padding: 2.5px;
   border-radius: 50px;
-}
 
-label {
-  width: 20px;
-  height: 20px;
-  background: #ccc;
-  display: flex;
-  cursor: pointer;
-  border-radius: 50px;
-  transition: all 0.25s ease 0s;
-}
+  label {
+    width: 20px;
+    height: 20px;
+    background: rgb(39, 39, 39);
+    display: flex;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.25s ease 0s;
+  }
 
-input {
-  display: none;
-}
+  input {
+    display: none;
+  }
 
-input:checked + label {
-  margin-left: 25px;
-  background: red;
-}
+  input:checked + label {
+    margin-left: 25px;
+    background: darkgreen;
+  }
 
-.toggle:before,
-.toggle:after {
-  content: "ON";
-  position: absolute;
-  font-size: 6px;
-  width: 20px;
-  height: 20px;
-  text-align: center;
-  padding: 5px 0;
-  z-index: 0;
-  color: red;
-}
+  &:before,
+  &:after {
+    content: "ON";
+    position: absolute;
+    font-size: 6px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    padding: 5px 0;
+    z-index: 0;
+    color: darkgreen;
+  }
 
-.toggle:after {
-  content: "OFF";
-  margin-top: -20px;
-  margin-left: 25px;
-  color: #666;
-}
+  &:after {
+    content: "OFF";
+    margin-top: -20px;
+    margin-left: 25px;
+    color: black;
+    font-weight: bold;
+  }
 
-label {
-  position: relative;
-  z-index: 1;
+  label {
+    position: relative;
+    z-index: 1;
+  }
 }

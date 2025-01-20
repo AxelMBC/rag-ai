@@ -8,12 +8,11 @@ import "./dashboard.scss";
 
 export interface ChatAnswers {
   id: string;
-  author: string; // "User" or the model name, e.g. "llama3-8b-8192"
+  author: string;
   message: string;
 }
 
 const ChatWindow = () => {
-  // Use the shape {id, author, message}
   const [answers, setAnswers] = useState<ChatAnswers[]>([]);
   const [selectedModel, setSelectedModel] = useState("llama3-8b-8192");
   const [loading, setLoading] = useState(false);
@@ -47,7 +46,6 @@ const ChatWindow = () => {
           </div>
         </div>
         <PromptInput
-          // pass conversation memory setting
           conversationalMemory={conversationalMemory}
           selectedModel={selectedModel}
           answers={answers}

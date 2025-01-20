@@ -1,5 +1,5 @@
-import { checkIsAuthenticated } from "./lib/auth/checkIsAuthenticated";
 import { redirect } from "next/navigation";
+import { checkIsAuthenticated } from "./lib/auth/checkIsAuthenticated";
 import ChatWindow from "./dashboard/ChatWindow";
 import "../styles/global.scss";
 
