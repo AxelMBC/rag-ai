@@ -24,6 +24,8 @@ const InputAsk = ({
   console.log("answers: ", answers);
   const handleSubmit = async () => {
     setLoading(true);
+    const userId = uuidv4();
+    answers.push({ id: userId, author: "User", message: inquiry });
 
     const res = conversationalMemory
       ? await fetch("/api/inquiry", {
@@ -35,11 +37,6 @@ const InputAsk = ({
           body: JSON.stringify({ inquiry, model: selectedModel }),
         });
 
-    // const res = await fetch("/api/inquiry", {
-    //   method: "POST",
-    //   body: JSON.stringify({ inquiry, model: selectedModel }),
-    // });
-
     const machineId = uuidv4();
     const data = await res?.json();
     const newAnswer = {
@@ -47,8 +44,7 @@ const InputAsk = ({
       author: data.response.model,
       message: data.response.choices[0].message.content,
     };
-    const userId = uuidv4();
-    answers.push({ id: userId, author: "User", message: inquiry });
+
     setAnswers([...answers, newAnswer]);
     router.push(`#${machineId}`);
     setLoading(false);

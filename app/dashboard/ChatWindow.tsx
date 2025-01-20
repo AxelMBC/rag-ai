@@ -6,7 +6,7 @@ import Loader from "../utils/Loader";
 import PromptInput from "./components/PromptInput";
 import "./dashboard.scss";
 
-interface ChatMessage {
+export interface ChatAnswers {
   id: string;
   author: string; // "User" or the model name, e.g. "llama3-8b-8192"
   message: string;
@@ -14,7 +14,7 @@ interface ChatMessage {
 
 const ChatWindow = () => {
   // Use the shape {id, author, message}
-  const [answers, setAnswers] = useState<ChatMessage[]>([]);
+  const [answers, setAnswers] = useState<ChatAnswers[]>([]);
   const [selectedModel, setSelectedModel] = useState("llama3-8b-8192");
   const [loading, setLoading] = useState(false);
   const [conversationalMemory, setConversationalMemory] = useState(false);
