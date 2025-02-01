@@ -43,7 +43,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.name = session.name;
 
         try {
-          await setName(token.name);
+          if (token.name) {
+            await setName(token.name);
+          }
         } catch (error) {
           console.error("Failed to set user name:", error);
         }

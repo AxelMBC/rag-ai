@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { checkIsAuthenticated } from "./lib/auth/checkIsAuthenticated";
-import ChatWindow from "./dashboard/ChatWindow";
+import ChatWindow from "./chat/ChatWindow";
 import "../styles/global.scss";
 
 const Home = async () => {
