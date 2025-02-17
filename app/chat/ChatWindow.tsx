@@ -4,13 +4,8 @@ import SideBar from "./sidebar/Header";
 import Message from "./components/Message";
 import Loader from "../utils/Loader";
 import PromptInput from "./components/PromptInput";
+import { ChatAnswers } from "../types/Answers";
 import "./dashboard.scss";
-
-export interface ChatAnswers {
-  id: string;
-  author: string;
-  message: string;
-}
 
 const ChatWindow = () => {
   const [answers, setAnswers] = useState<ChatAnswers[]>([]);
