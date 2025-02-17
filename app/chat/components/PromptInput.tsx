@@ -21,7 +21,7 @@ const InputAsk = ({
 }: InputAskProps) => {
   const router = useRouter();
   const [inquiry, setInquiry] = useState("");
-  console.log("answers: ", answers);
+
   const handleSubmit = async () => {
     setLoading(true);
     const userId = uuidv4();
