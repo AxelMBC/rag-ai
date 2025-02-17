@@ -1,4 +1,5 @@
-import "./toggleStyle.scss";
+import "./ToggleMemoryStyle.scss";
+
 interface ToggleType {
   conversationalMemory: boolean;
   setConversationalMemory: (value: boolean) => void;

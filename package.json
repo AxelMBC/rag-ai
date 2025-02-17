@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --experimental-https",
     "seed": "ts-node ./scripts/loadDb.ts",
+    "release": "git add . && git commit -m 'release' && git push",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
