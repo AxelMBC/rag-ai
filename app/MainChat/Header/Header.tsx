@@ -8,7 +8,7 @@ import { unlinkGoogleAccount } from "../../lib/auth/unlinkGoogleAccountServerAct
 import { handleGoogleSignIn } from "../../lib/auth/googleSignInServerAction";
 import { getUserName } from "../../lib/auth/getUserNameServerAction";
 import Toggle from "../components/ToggleMemory";
-import SelectModel from "./SelectModel";
+import SelectModel from "../components/ModelSelect";
 
 interface ModelSelectorProps {
   selectedModel: string;
