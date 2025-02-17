@@ -1,5 +1,5 @@
 "use client";
-import "./modelSelector.scss";
+import "./HeaderStyle.scss";
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { handleSignOut } from "../../lib/auth/signOutServerAction";
@@ -7,8 +7,8 @@ import { getAccountLinkStatus } from "../../lib/auth/getAccountLinkStatusServer"
 import { unlinkGoogleAccount } from "../../lib/auth/unlinkGoogleAccountServerAction";
 import { handleGoogleSignIn } from "../../lib/auth/googleSignInServerAction";
 import { getUserName } from "../../lib/auth/getUserNameServerAction";
-import ToggleMemory from "../../components/ToggleMemory";
-import SelectModel from "../../chat/sidebar/SelectModel";
+import Toggle from "../../components/ToggleMemory/";
+import SelectModel from "../../components/SelectModel";
 
 interface ModelSelectorProps {
   selectedModel: string;
@@ -84,7 +84,7 @@ const SideBar = ({
               selectedModel={selectedModel}
             />
           </div>
-          <ToggleMemory
+          <Toggle
             conversationalMemory={conversationalMemory}
             setConversationalMemory={setConversationalMemory}
           />

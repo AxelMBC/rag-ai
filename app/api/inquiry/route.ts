@@ -1,25 +1,18 @@
 import Groq from "groq-sdk";
-import { ChatAnswers } from "../../chat/ChatWindow";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-
-interface RequestProps {
-  json():
-    | { answers: ChatAnswers[]; model: string }
-    | PromiseLike<{ answers: ChatAnswers[]; model: string }>;
-}
 
 interface GroqReq {
   role: string;
   content: string;
 }
 
-export async function POST(request: RequestProps) {
+export async function POST(request: any) {
   const { answers, model } = await request.json();
 
   const content: GroqReq[] = [];
 
-  answers.map((item: ChatAnswers) =>
+  answers.map((item: any) =>
     content.push({
       role: item.author == "User" ? "user" : "assistant",
       content: item.message,

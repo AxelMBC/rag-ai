@@ -1,9 +1,9 @@
 "use client";
 import "./MainChat.module.scss";
 import { useState } from "react";
-import SideBar from "../chat/sidebar/Header";
-import Message from "./components/Message";
-import PromptInput from "./components/PromptInput";
+import Header from "./Header";
+import Message from "./Message";
+import PromptInput from "./PromptInput";
 import Loader from "../utils/Loader";
 import { ChatAnswers } from "../types/Answers";
 
@@ -15,7 +15,7 @@ const ChatWindow = () => {
 
   return (
     <>
-      <SideBar
+      <Header
         selectedModel={selectedModel}
         setSelectedModel={setSelectedModel}
         conversationalMemory={conversationalMemory}

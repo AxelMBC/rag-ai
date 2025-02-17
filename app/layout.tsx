@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
-import { Roboto_Mono } from "next/font/google";
-import "@fortawesome/fontawesome-free/css/all.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "@fortawesome/fontawesome-free/css/all.css";
+import { Roboto_Mono } from "next/font/google";
+import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 
 const roboto_mono = Roboto_Mono({

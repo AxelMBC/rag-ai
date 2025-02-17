@@ -1,8 +1,4 @@
 "use client";
-<<<<<<< HEAD
-=======
-
->>>>>>> dev
 import { formatResponse } from "../../../utils/formatResponse";
 
 interface MessageProps {
