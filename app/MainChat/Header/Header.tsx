@@ -7,8 +7,8 @@ import { getAccountLinkStatus } from "../../lib/auth/getAccountLinkStatusServer"
 import { unlinkGoogleAccount } from "../../lib/auth/unlinkGoogleAccountServerAction";
 import { handleGoogleSignIn } from "../../lib/auth/googleSignInServerAction";
 import { getUserName } from "../../lib/auth/getUserNameServerAction";
-import Toggle from "../components/ToggleMemory";
-import SelectModel from "../components/ModelSelect";
+import ToggleMemory from "../../components/ToggleMemory";
+import SelectModel from "../../chat/sidebar/SelectModel";
 
 interface ModelSelectorProps {
   selectedModel: string;
@@ -84,7 +84,7 @@ const SideBar = ({
               selectedModel={selectedModel}
             />
           </div>
-          <Toggle
+          <ToggleMemory
             conversationalMemory={conversationalMemory}
             setConversationalMemory={setConversationalMemory}
           />
