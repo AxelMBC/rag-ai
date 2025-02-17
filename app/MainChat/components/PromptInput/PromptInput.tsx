@@ -12,7 +12,11 @@ interface InputAskProps {
   setLoading: (value: boolean) => void;
 }
 
+<<<<<<< HEAD
 const InputAsk = ({
+=======
+const PromptInput = ({
+>>>>>>> dev
   conversationalMemory,
   selectedModel,
   answers,
@@ -85,4 +89,8 @@ const InputAsk = ({
   );
 };
 
+<<<<<<< HEAD
 export default InputAsk;
+=======
+export default PromptInput;
+>>>>>>> dev

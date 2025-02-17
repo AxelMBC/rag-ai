@@ -1,10 +1,10 @@
 "use client";
 import "./ChatWindow.module.scss";
 import { useState } from "react";
-import SideBar from "./Header";
+import SideBar from "../chat/sidebar/Header";
 import Message from "./components/Message";
-import Loader from "../utils/Loader";
 import PromptInput from "./components/PromptInput";
+import Loader from "../utils/Loader";
 import { ChatAnswers } from "../types/Answers";
 
 const ChatWindow = () => {
