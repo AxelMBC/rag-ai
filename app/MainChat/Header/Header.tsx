@@ -1,13 +1,13 @@
 "use client";
+import "./modelSelector.scss";
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
-import "./modelSelector.scss";
 import { handleSignOut } from "../../lib/auth/signOutServerAction";
 import { getAccountLinkStatus } from "../../lib/auth/getAccountLinkStatusServer";
 import { unlinkGoogleAccount } from "../../lib/auth/unlinkGoogleAccountServerAction";
 import { handleGoogleSignIn } from "../../lib/auth/googleSignInServerAction";
 import { getUserName } from "../../lib/auth/getUserNameServerAction";
-import Toggle from "./Toggle";
+import Toggle from "../components/ToggleMemory";
 import SelectModel from "./SelectModel";
 
 interface ModelSelectorProps {
