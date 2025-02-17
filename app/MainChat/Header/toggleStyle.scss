@@ -1,0 +1,52 @@
+.toggle {
+  background: #eee;
+  width: 50px;
+  height: 25px;
+  padding: 2.5px;
+  border-radius: 50px;
+
+  label {
+    width: 20px;
+    height: 20px;
+    background: rgb(39, 39, 39);
+    display: flex;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.25s ease 0s;
+  }
+
+  input {
+    display: none;
+  }
+
+  input:checked + label {
+    margin-left: 25px;
+    background: darkgreen;
+  }
+
+  &:before,
+  &:after {
+    content: "ON";
+    position: absolute;
+    font-size: 6px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    padding: 5px 0;
+    z-index: 0;
+    color: darkgreen;
+  }
+
+  &:after {
+    content: "OFF";
+    margin-top: -20px;
+    margin-left: 25px;
+    color: black;
+    font-weight: bold;
+  }
+
+  label {
+    position: relative;
+    z-index: 1;
+  }
+}
