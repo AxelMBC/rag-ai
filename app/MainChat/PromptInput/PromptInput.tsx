@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
+interface Message {
+  id: string;
+  author: string;
+  message: string;
+}
 
 interface InputAskProps {
   conversationalMemory: boolean;
   selectedModel: string;
-  answers: { id: string; author: string; message: string }[];
-  setAnswers: (
-    value: { id: string; author: string; message: string }[]
-  ) => void;
+  answers: Message[];
+  // Allow both a direct array OR a function returning a new array
+  setAnswers: React.Dispatch<React.SetStateAction<Message[]>>;
   setLoading: (value: boolean) => void;
 }
 
@@ -22,33 +26,56 @@ const PromptInput = ({
   const router = useRouter();
   const [inquiry, setInquiry] = useState("");
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!inquiry.trim()) return; // Prevent submitting empty inquiries
+
     setLoading(true);
+
+    // Create a new answer without mutating the prop directly
     const userId = uuidv4();
-    answers.push({ id: userId, author: "User", message: inquiry });
+    const updatedAnswers = [
+      ...answers,
+      { id: userId, author: "User", message: inquiry },
+    ];
+    setAnswers(updatedAnswers);
 
-    const res = conversationalMemory
-      ? await fetch("/api/inquiry", {
-          method: "POST",
-          body: JSON.stringify({ answers, model: selectedModel }),
-        })
-      : await fetch("/api/inquiryNoMemory", {
-          method: "POST",
-          body: JSON.stringify({ inquiry, model: selectedModel }),
-        });
+    try {
+      // Determine endpoint and payload based on conversationalMemory flag
+      const endpoint = conversationalMemory
+        ? "/api/inquiry"
+        : "/api/inquiryNoMemory";
+      const payload = conversationalMemory
+        ? { answers: updatedAnswers, model: selectedModel }
+        : { inquiry, model: selectedModel };
 
-    const machineId = uuidv4();
-    const data = await res?.json();
-    const newAnswer = {
-      id: machineId,
-      author: data.response.model,
-      message: data.response.choices[0].message.content,
-    };
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-    setAnswers([...answers, newAnswer]);
-    router.push(`#${machineId}`);
-    setLoading(false);
-    setInquiry("");
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      const data = await res.json();
+      const machineId = uuidv4();
+
+      const newAnswer = {
+        id: machineId,
+        author: data.response.model,
+        message: data.response.choices[0].message.content,
+      };
+
+      setAnswers((prev) => [...prev, newAnswer]);
+      router.push(`#${machineId}`);
+    } catch (error) {
+      console.error("Error during inquiry submission:", error);
+    } finally {
+      setLoading(false);
+      setInquiry("");
+    }
   };
 
   return (
