@@ -93,7 +93,7 @@ const PromptInput = ({
                 placeholder="Type your question..."
               />
               <div
-                className="d-flex justify-content-center align-items-center cursor-pointer"
+                className="d-flex justify-content-center align-items-center cursor-pointer me-3"
                 onClick={() => handleSubmit()}
                 style={{
                   width: "40px",
@@ -103,6 +103,18 @@ const PromptInput = ({
                 }}
               >
                 <i className="fas fa-arrow-up" style={{ color: "black" }} />
+              </div>
+              <div
+                className="d-flex justify-content-center align-items-center cursor-pointer"
+                onClick={() => console.log("Test clicked")}
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  backgroundColor: "white",
+                }}
+              >
+                <i className="fas fa-flask" style={{ color: "black" }} />
               </div>
             </div>
           </div>
