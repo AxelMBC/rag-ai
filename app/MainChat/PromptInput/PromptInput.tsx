@@ -78,6 +78,18 @@ const PromptInput = ({
     }
   };
 
+  const testAPICall = async () => {
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: inquiry,
+      });
+      console.log("res: ", res);
+    } catch (err) {
+      console.log("Error querying db...", err);
+    }
+  };
   return (
     <div className="sticky-chat-input">
       <div className="container-fluid">
@@ -106,7 +118,7 @@ const PromptInput = ({
               </div>
               <div
                 className="d-flex justify-content-center align-items-center cursor-pointer"
-                onClick={() => console.log("Test clicked")}
+                onClick={() => testAPICall()}
                 style={{
                   width: "40px",
                   height: "40px",
