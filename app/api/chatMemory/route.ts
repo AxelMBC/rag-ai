@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { MessageType } from "@/app/types/Message";
+import { MessageType } from "@/app/types/MessageType";
 
 export async function POST(request: Request) {
   try {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { MessageType } from "../../types/Message";
+import { MessageType } from "../../types/MessageType";
 import SubmitButton from "./SubmitButton";
 
 interface InputAskProps {
