@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { MessageType } from "../../types/Message";
+import SubmitButton from "./SubmitButton";
 
 interface InputAskProps {
   messages: MessageType[];
@@ -24,9 +25,7 @@ const PromptInput = ({
 
   const handlePrompt = async () => {
     if (!userPrompt.trim()) return; // Prevent sending empty prompts
-
     setLoading(true);
-    const endpoint = !conversationalMemory ? "/api/chat" : "/api/chatMemory";
 
     const newUserMessage: MessageType = {
       id: crypto.randomUUID(),
@@ -34,10 +33,15 @@ const PromptInput = ({
       content: userPrompt,
     };
 
+    //Add user message to 'messages' list
     setMessages((prevMessages) => [...prevMessages, newUserMessage]);
-    const updatedMessages = [...messages, newUserMessage];
+    const updatedMessages = [...messages, newUserMessage]; //Create shallow copy of previous and new message
+
+    // use chatMemory endpoint if user wants conversation memory
+    const endpoint = !conversationalMemory ? "/api/chat" : "/api/chatMemory";
 
     try {
+      // API call
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -54,8 +58,8 @@ const PromptInput = ({
       const data = await res.json();
       const botContent = data?.choices?.[0]?.message?.content;
       const botName = data?.model;
-
       const answerID = crypto.randomUUID();
+
       if (botContent) {
         const botMessage: MessageType = {
           id: answerID,
@@ -63,8 +67,8 @@ const PromptInput = ({
           content: botContent,
         };
         setMessages((prevMessages) => [...prevMessages, botMessage]);
+        router.push(`#${answerID}`);
       }
-      router.push(`#${answerID}`);
     } catch (error) {
       console.error("Error during prompt submission:", error);
     } finally {
@@ -87,31 +91,7 @@ const PromptInput = ({
                 onChange={(e) => setUserPrompt(e.target.value)}
                 placeholder="Type your question..."
               />
-              <button
-                className="d-flex justify-content-center align-items-center cursor-pointer me-3"
-                onClick={() => handlePrompt()}
-                disabled={loading}
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "50%",
-                  backgroundColor: "white",
-                }}
-              >
-                <i className="fas fa-arrow-up" style={{ color: "black" }} />
-              </button>
-              {/* <div
-                className="d-flex justify-content-center align-items-center cursor-pointer"
-                onClick={() => handlePrompt()}
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "50%",
-                  backgroundColor: "white",
-                }}
-              >
-                <i className="fas fa-flask" style={{ color: "black" }} />
-              </div> */}
+              <SubmitButton handlePrompt={handlePrompt} loading={loading} />
             </div>
           </div>
         </div>
