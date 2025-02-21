@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { MessageType } from "@/app/types/Message";
 
 export async function POST(request: Request) {
   try {
@@ -11,15 +12,18 @@ export async function POST(request: Request) {
       );
     }
 
-    const lastMessage = messages[messages.length - 1];
-    const transformedMessage = {
-      role: lastMessage.role,
-      content: lastMessage.content,
-    };
+    const transformedMessages = [];
+
+    messages.map((item: MessageType) => {
+      transformedMessages.push({
+        role: item.role == "user" ? item.role : "assistant",
+        content: item.content,
+      });
+    });
 
     const payload = {
       model,
-      messages: [transformedMessage],
+      messages: transformedMessages,
     };
     const response = await fetch(
       "https://api.groq.com/openai/v1/chat/completions",
