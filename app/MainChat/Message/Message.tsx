@@ -1,6 +1,7 @@
 "use client";
 
 import { formatResponse } from "../../utils/formatResponse";
+import { capitalizeFirstLetter } from "../../utils/usefulFunctions";
 
 interface MessageProps {
   answerId: string;
@@ -14,10 +15,10 @@ const Message = ({ answerId, answerAuthor, answerMessage }: MessageProps) => {
       <h5
         style={{
           fontWeight: "600",
-          color: `${answerAuthor === "User" ? "#009bd6" : "red"}`,
+          color: `${answerAuthor === "user" ? "#009bd6" : "red"}`,
         }}
       >
-        {answerAuthor}:
+        {capitalizeFirstLetter(answerAuthor)}:
       </h5>
       <span>{formatResponse(answerMessage)}</span>
     </div>
