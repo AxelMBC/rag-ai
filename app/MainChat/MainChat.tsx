@@ -29,12 +29,20 @@ const ChatWindow = () => {
             <div className="col-12 col-md-10 col-xl-7 col-xxl-6 ml-4">
               <h3 className="prompt fw-bold">What is your question?</h3>
               <div className="answers-container">
-                {answers.map((answer) => (
+                {/* {answers.map((answer) => (
                   <Message
                     key={answer.id}
                     answerId={answer.id}
                     answerAuthor={answer.author}
                     answerMessage={answer.message}
+                  />
+                ))} */}
+                {messages.map((message) => (
+                  <Message
+                    key={message.id}
+                    answerId={message.id}
+                    answerAuthor={message.role}
+                    answerMessage={message.message}
                   />
                 ))}
                 {loading && <Loader />}

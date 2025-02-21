@@ -43,6 +43,7 @@ export async function POST(request: Request) {
     }
 
     const data = await response.json();
+    console.log("response data: ", data);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error("Error processing request:", error);

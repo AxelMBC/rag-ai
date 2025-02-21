@@ -90,16 +90,13 @@ const PromptInput = ({
     if (!userPrompt.trim()) return; // Prevent sending empty prompts
     setLoading(true);
 
-    // Create a new user message
     const newUserMessage: MessageType = {
       id: crypto.randomUUID(),
       role: "user",
       message: userPrompt,
     };
-    // Optimistically update the messages state
-    setMessages((prevMessages) => [...prevMessages, newUserMessage]);
 
-    // Compute the updated messages array for the payload
+    setMessages((prevMessages) => [...prevMessages, newUserMessage]);
     const updatedMessages = [...messages, newUserMessage];
 
     try {
@@ -117,14 +114,15 @@ const PromptInput = ({
       }
 
       const data = await res.json();
-      const botContent = data?.response?.choices?.[0]?.message?.content;
+      const botContent = data?.choices?.[0]?.message?.content;
+      const botName = data?.model;
+
       if (botContent) {
         const botMessage: MessageType = {
           id: crypto.randomUUID(),
-          role: "bot",
+          role: botName,
           message: botContent,
         };
-        // Append the bot's message to the conversation
         setMessages((prevMessages) => [...prevMessages, botMessage]);
       }
     } catch (error) {
