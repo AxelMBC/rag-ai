@@ -1,5 +1,5 @@
 import "./SelectModelStyle.scss";
-import { groqModels } from "../../aiModels/groqModels";
+import { groqModels } from "../../../aiModels/groqModels";
 
 type HandleSelectFunction = (modelId: string) => void;
 
