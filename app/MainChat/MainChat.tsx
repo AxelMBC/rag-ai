@@ -1,17 +1,17 @@
 "use client";
-import "./MainChat.module.scss";
+import "./MainChatStyle.scss";
 import { useState } from "react";
 import Header from "./Header";
 import Message from "./Message";
 import PromptInput from "./PromptInput";
 import Loader from "../utils/Loader";
-import { MessageType } from "../types/Message";
+import { MessageType } from "../types/MessageType";
 
 const ChatWindow = () => {
-  const [messages, setMessages] = useState<MessageType[]>([]);
   const [selectedModel, setSelectedModel] = useState("llama3-8b-8192");
-  const [loading, setLoading] = useState(false);
   const [conversationalMemory, setConversationalMemory] = useState(false);
+  const [messages, setMessages] = useState<MessageType[]>([]);
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
