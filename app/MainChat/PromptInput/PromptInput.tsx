@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
+import { MessageType } from "../../types/Message";
+
 interface Message {
   id: string;
   author: string;
@@ -8,6 +10,8 @@ interface Message {
 }
 
 interface InputAskProps {
+  messages: MessageType[];
+  setMessages: React.Dispatch<React.SetStateAction<MessageType[]>>;
   conversationalMemory: boolean;
   selectedModel: string;
   answers: Message[];
@@ -17,6 +21,8 @@ interface InputAskProps {
 }
 
 const PromptInput = ({
+  messages,
+  setMessages,
   conversationalMemory,
   selectedModel,
   answers,
@@ -25,6 +31,7 @@ const PromptInput = ({
 }: InputAskProps) => {
   const router = useRouter();
   const [inquiry, setInquiry] = useState("");
+  const [userPrompt, setUserPrompt] = useState("");
 
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -78,6 +85,56 @@ const PromptInput = ({
     }
   };
 
+  const handlePrompt = async () => {
+    if (!userPrompt.trim()) return; // Prevent sending empty prompts
+    setLoading(true);
+
+    // Create a new user message
+    const newUserMessage: MessageType = {
+      id: crypto.randomUUID(),
+      role: "user",
+      message: userPrompt,
+    };
+
+    // Optimistically update the messages state
+    setMessages((prevMessages) => [...prevMessages, newUserMessage]);
+
+    // Compute the updated messages array for the payload
+    const updatedMessages = [...messages, newUserMessage];
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: updatedMessages,
+          model: selectedModel,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      const data = await res.json();
+      const botContent = data?.response?.choices?.[0]?.message?.content;
+      if (botContent) {
+        const botMessage: MessageType = {
+          id: crypto.randomUUID(),
+          role: "bot",
+          message: botContent,
+        };
+        // Append the bot's message to the conversation
+        setMessages((prevMessages) => [...prevMessages, botMessage]);
+      }
+    } catch (error) {
+      console.error("Error during prompt submission:", error);
+    } finally {
+      setUserPrompt("");
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="sticky-chat-input">
       <div className="container-fluid">
@@ -87,9 +144,12 @@ const PromptInput = ({
               <input
                 className="form-control me-4"
                 type="text"
-                name="inquiry"
-                value={inquiry}
-                onChange={(e) => setInquiry(e.target.value)}
+                // name="inquiry"
+                // value={inquiry}
+                // onChange={(e) => setInquiry(e.target.value)}
+                name="userPrompt"
+                value={userPrompt}
+                onChange={(e) => setUserPrompt(e.target.value)}
                 placeholder="Type your question..."
               />
               <div
@@ -106,7 +166,7 @@ const PromptInput = ({
               </div>
               <div
                 className="d-flex justify-content-center align-items-center cursor-pointer"
-                onClick={() => console.log("Test clicked")}
+                onClick={() => handlePrompt()}
                 style={{
                   width: "40px",
                   height: "40px",

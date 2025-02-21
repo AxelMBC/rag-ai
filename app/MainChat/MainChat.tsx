@@ -6,9 +6,11 @@ import Message from "./Message";
 import PromptInput from "./PromptInput";
 import Loader from "../utils/Loader";
 import { ChatAnswers } from "../types/Answers";
+import { MessageType } from "../types/Message";
 
 const ChatWindow = () => {
   const [answers, setAnswers] = useState<ChatAnswers[]>([]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const [selectedModel, setSelectedModel] = useState("llama3-8b-8192");
   const [loading, setLoading] = useState(false);
   const [conversationalMemory, setConversationalMemory] = useState(false);
@@ -41,6 +43,8 @@ const ChatWindow = () => {
           </div>
         </div>
         <PromptInput
+          messages={messages}
+          setMessages={setMessages}
           conversationalMemory={conversationalMemory}
           selectedModel={selectedModel}
           answers={answers}
