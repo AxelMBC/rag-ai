@@ -32,6 +32,7 @@ const PromptInput = ({
   const router = useRouter();
   const [inquiry, setInquiry] = useState("");
   const [userPrompt, setUserPrompt] = useState("");
+  console.log("messages: ", messages);
 
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -95,7 +96,6 @@ const PromptInput = ({
       role: "user",
       message: userPrompt,
     };
-
     // Optimistically update the messages state
     setMessages((prevMessages) => [...prevMessages, newUserMessage]);
 
