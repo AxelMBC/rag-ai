@@ -89,6 +89,11 @@ const PromptInput = ({
                 name="userPrompt"
                 value={userPrompt}
                 onChange={(e) => setUserPrompt(e.target.value)}
+                onKeyDown={(e)=>{
+                  if (e.key === "Enter"){
+                    handlePrompt()
+                  }
+                }}
                 placeholder="Type your question..."
               />
               <SubmitButton handlePrompt={handlePrompt} loading={loading} />
