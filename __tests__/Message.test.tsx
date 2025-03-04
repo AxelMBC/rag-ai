@@ -46,7 +46,7 @@ describe("Message Component", () => {
   test("renders correct color for non-user author", () => {
     setup({
       answerId: "7656184b-e54d-42ff-877b-9fb38a901eca",
-      answerAuthor: "Llama3-8b-8192",
+      answerAuthor: "Assistant",
       answerMessage: "Test message",
     });
     const heading = screen.getByRole("heading", { level: 5 });
