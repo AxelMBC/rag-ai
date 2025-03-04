@@ -3,3 +3,9 @@ export interface MessageType {
   role: string;
   content: string;
 }
+
+export interface MessagePropsType {
+  answerId: string;
+  answerAuthor: string;
+  answerMessage: string;
+}
