@@ -16,7 +16,6 @@
     "@auth/pg-adapter": "^1.7.4",
     "@datastax/astra-db-ts": "^1.5.0",
     "@fortawesome/fontawesome-free": "^6.6.0",
-    "@langchain/community": "^0.3.30",
     "@langchain/core": "^0.3.40",
     "@langchain/groq": "^0.1.2",
     "bootstrap": "^5.3.3",
