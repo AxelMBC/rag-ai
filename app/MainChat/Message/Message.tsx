@@ -2,14 +2,9 @@
 
 import { formatResponse } from "../../utils/formatResponse";
 import { capitalizeFirstLetter } from "../../utils/usefulFunctions";
+import { MessagePropsType } from "../../types/MessageType";
 
-interface MessageProps {
-  answerId: string;
-  answerAuthor: string;
-  answerMessage: string;
-}
-
-const Message = ({ answerId, answerAuthor, answerMessage }: MessageProps) => {
+const Message = ({ answerId, answerAuthor, answerMessage }: MessagePropsType) => {
   return (
     <div id={answerId} className="response-box bg-transparent" key={answerId}>
       <h5
